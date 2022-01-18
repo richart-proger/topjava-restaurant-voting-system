@@ -17,22 +17,24 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <jackson.version>2.13.1</jackson.version>
+        <!--Spring-->
+        <spring.version>5.3.14</spring.version>
+
+        <!--Web-->
+        <tomcat.version>10.0.14</tomcat.version>
+
         <!-- Logging -->
         <logback.version>1.2.10</logback.version>
         <slf4j.version>2.0.0-alpha5</slf4j.version>
 
-        <!--Test-->
-        <junit.version>4.13.2</junit.version>
     </properties>
 
     <dependencies>
         <!-- Spring -->
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
-            <scope>test</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring.version}</version>
         </dependency>
 
         <!--Web-->
