@@ -4,5 +4,6 @@
 
 ### Technology stack:
 * Java 17
-* 
+* Hibernate
+* HyperSQL Database
 * Maven 3

@@ -29,6 +29,14 @@
 
         <!--DataBase-->
         <hsqldb.version>2.6.1</hsqldb.version>
+
+        <!--Hibernate-->
+        <!--ORM-->
+        <hibernate.version>5.6.3.Final</hibernate.version>
+        <!--Validation-->
+        <hibernate-validator.version>7.0.2.Final</hibernate-validator.version>
+        <!--<javax-el.version>3.0.1-b06</javax-el.version>-->
+        <validation-api.version>2.0.1.Final</validation-api.version>
     </properties>
 
     <dependencies>
@@ -72,6 +80,33 @@
             <artifactId>hsqldb</artifactId>
             <version>${hsqldb.version}</version>
         </dependency>
+
+        <!--Annotation-->
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+
+        <!--ORM-->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!--Validation-->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate-validator.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>${validation-api.version}</version>
+        </dependency>
+
 
     </dependencies>
 
