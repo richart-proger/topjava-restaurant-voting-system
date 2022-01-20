@@ -1,6 +1,8 @@
 package ru.javawebinar.restaurant_voting_system.repository;
 
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.restaurant_voting_system.model.User;
 
 import javax.persistence.EntityManager;
@@ -8,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
@@ -19,6 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public User save(User user) {
         if (user.isNew()) {
             em.persist(user);
@@ -29,20 +33,23 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
-        // TODO NamedQuery
-        return false;
+        return em.createNamedQuery(User.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 
     @Override
     public User getByEmail(String email) {
-        // TODO NamedQuery
-        return null;
+        List<User> users = em.createNamedQuery(User.BY_EMAIL, User.class)
+                .setParameter(1, email)
+                .getResultList();
+        return DataAccessUtils.singleResult(users);
     }
 
     @Override
     public List<User> getAll() {
-        // TODO NamedQuery
-        return null;
+        return em.createNamedQuery(User.ALL_SORTED, User.class).getResultList();
     }
 }
