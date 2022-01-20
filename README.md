@@ -4,6 +4,10 @@
 
 ### Technology stack:
 * Java 17
+* Spring 5
 * Hibernate
 * HyperSQL Database
+* JUnit 4
+* AssertJ
+* SLF4J
 * Maven 3
