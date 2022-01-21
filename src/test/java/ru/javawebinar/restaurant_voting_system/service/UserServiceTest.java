@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.UserTestData.*;
+import static ru.javawebinar.restaurant_voting_system.UserTestData.getUpdated;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
@@ -35,8 +36,8 @@ public class UserServiceTest {
         Integer newId = created.getId();
         User newUser = getNew();
         newUser.setId(newId);
-        assertMatch(created, newUser);
-        assertMatch(service.get(newId), newUser);
+        USER_MATCHER.assertMatch(created, newUser);
+        USER_MATCHER.assertMatch(service.get(newId), newUser);
     }
 
     @Test
@@ -59,7 +60,7 @@ public class UserServiceTest {
     @Test
     public void get() {
         User user = service.get(USER_ID);
-        assertMatch(user, UserTestData.user);
+        USER_MATCHER.assertMatch(user, UserTestData.user);
     }
 
     @Test
@@ -70,19 +71,20 @@ public class UserServiceTest {
     @Test
     public void getByEmail() {
         User user = service.getByEmail("admin@gmail.com");
-        assertMatch(user, admin);
+        USER_MATCHER.assertMatch(user, admin);
     }
 
     @Test
     public void getAll() {
         List<User> allUsers = service.getAll();
-        assertMatch(allUsers, admin, user);
+        USER_MATCHER.assertMatch(allUsers, admin, user);
     }
 
     @Test
     public void update() {
         User updated = getUpdated();
         service.update(updated);
-        assertMatch(service.get(USER_ID), updated);
+        updated = getUpdated();
+        USER_MATCHER.assertMatch(service.get(USER_ID), updated);
     }
 }
