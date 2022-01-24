@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.junit4.SpringRunner;
-import ru.javawebinar.restaurant_voting_system.UserTestData;
+import ru.javawebinar.restaurant_voting_system.data.UserTestData;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
@@ -16,8 +16,7 @@ import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 import java.util.List;
 
 import static org.junit.Assert.assertThrows;
-import static ru.javawebinar.restaurant_voting_system.UserTestData.*;
-import static ru.javawebinar.restaurant_voting_system.UserTestData.getUpdated;
+import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
 
 @ContextConfiguration({
         "classpath:spring/spring-app.xml",
