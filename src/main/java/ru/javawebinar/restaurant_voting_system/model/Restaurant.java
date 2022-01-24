@@ -1,18 +1,35 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
-import java.util.HashSet;
+import javax.persistence.*;
 import java.util.Set;
 
+@Entity
+@Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx")})
 public class Restaurant extends AbstractNamedEntity {
-    private Set<Dish> restaurantMenu = new HashSet<>();
 
-    public Restaurant(Restaurant r) {
-        this(r.id, r.name, r.restaurantMenu);
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @OrderBy("date desc")
+    private Set<Dish> restaurantMenu;
+
+    public Restaurant(Set<Dish> menu) {
+        this.restaurantMenu = menu;
+    }
+
+    public Restaurant() {
+
+    }
+
+    public Restaurant(Integer id, String name) {
+        super(id, name);
     }
 
     public Restaurant(Integer id, String name, Set<Dish> menu) {
         super(id, name);
         setMenu(menu);
+    }
+
+    public Restaurant(Restaurant r) {
+        this(r.id, r.name, r.restaurantMenu);
     }
 
     public Set<Dish> getMenu() {

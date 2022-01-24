@@ -1,19 +1,35 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
-import java.util.Date;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
+import javax.persistence.*;
+import java.time.LocalDate;
+
+@Entity
+@Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date"}, name = "dishes_unique_name_date_rest_idx")})
 public class Dish extends AbstractNamedEntity {
+
+    @Column(name = "price", nullable = false)
     private Integer price;
 
-    private Date date;
+    @Column(name = "date", nullable = false, columnDefinition = "date default now()")
+    private LocalDate date;
 
+    @JoinColumn(name = "restaurant_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
+
+    public Dish() {
+
+    }
 
     public Dish(Dish d) {
         this(d.id, d.name, d.price, d.date, d.restaurant);
     }
 
-    public Dish(Integer id, String name, Integer price, Date date, Restaurant restaurant) {
+    public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
         super(id, name);
         this.price = price;
         this.date = date;
@@ -28,11 +44,11 @@ public class Dish extends AbstractNamedEntity {
         this.price = price;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
