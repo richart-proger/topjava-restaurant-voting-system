@@ -6,9 +6,16 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@NamedQueries({
+        @NamedQuery(name = Dish.DELETE, query = "DELETE FROM Dish d WHERE d.id=:id"),
+        @NamedQuery(name = Dish.ALL_SORTED, query = "SELECT d FROM Dish d")
+})
+
 @Entity
 @Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date"}, name = "dishes_unique_name_date_rest_idx")})
 public class Dish extends AbstractNamedEntity {
+    public static final String DELETE = "Dish.delete";
+    public static final String ALL_SORTED = "Dish.getAllSorted";
 
     @Column(name = "price", nullable = false)
     private Integer price;

@@ -1,6 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 
 import javax.persistence.EntityManager;
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository
+@Transactional(readOnly = true)
 public class DishRepositoryImpl implements DishRepository {
 
     @PersistenceContext
@@ -19,6 +21,7 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    @Transactional
     public Dish save(Dish dish) {
         if (dish.isNew()) {
             em.persist(dish);
@@ -29,14 +32,15 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id) {
-        // TODO NamedQuery
-        return false;
+        return em.createNamedQuery(Dish.DELETE)
+                .setParameter("id", id)
+                .executeUpdate() != 0;
     }
 
     @Override
     public List<Dish> getAll() {
-        // TODO NamedQuery
-        return null;
+        return em.createNamedQuery(Dish.ALL_SORTED, Dish.class).getResultList();
     }
 }
