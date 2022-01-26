@@ -1,13 +1,8 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.restaurant_voting_system.data.UserTestData;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 import ru.javawebinar.restaurant_voting_system.model.User;
@@ -18,13 +13,7 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class UserServiceTest {
+public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
@@ -59,7 +48,7 @@ public class UserServiceTest {
     @Test
     public void get() {
         User user = service.get(USER_ID);
-        USER_MATCHER.assertMatch(user, UserTestData.user);
+        USER_MATCHER.assertMatch(user, UserTestData.USER);
     }
 
     @Test
@@ -70,13 +59,13 @@ public class UserServiceTest {
     @Test
     public void getByEmail() {
         User user = service.getByEmail("admin@gmail.com");
-        USER_MATCHER.assertMatch(user, admin);
+        USER_MATCHER.assertMatch(user, ADMIN);
     }
 
     @Test
     public void getAll() {
         List<User> allUsers = service.getAll();
-        USER_MATCHER.assertMatch(allUsers, admin, user);
+        USER_MATCHER.assertMatch(allUsers, ADMIN, USER);
     }
 
     @Test

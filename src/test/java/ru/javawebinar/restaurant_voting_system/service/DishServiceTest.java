@@ -1,12 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.restaurant_voting_system.data.DishTestData;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
@@ -17,13 +12,7 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.DishTestData.*;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class DishServiceTest {
+public class DishServiceTest extends AbstractServiceTest {
 
     @Autowired
     private DishService service;
@@ -52,7 +41,7 @@ public class DishServiceTest {
     @Test
     public void get() {
         Dish dish = service.get(DISH_ID);
-        DISH_MATCHER.assertMatch(dish, DishTestData.dish_1);
+        DISH_MATCHER.assertMatch(dish, DishTestData.DISH_1);
     }
 
     @Test
@@ -63,7 +52,7 @@ public class DishServiceTest {
     @Test
     public void getAll() {
         List<Dish> allDishes = service.getAll();
-        List<Dish> allTestDishes = Arrays.asList(dish_1, dish_2, dish_3, dish_4, dish_5, dish_6);
+        List<Dish> allTestDishes = Arrays.asList(DISH_1, DISH_2, DISH_3, DISH_4, DISH_5, DISH_6);
         DISH_MATCHER.assertMatch(allDishes, allTestDishes);
     }
 

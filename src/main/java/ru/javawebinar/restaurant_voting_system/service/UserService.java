@@ -2,6 +2,7 @@ package ru.javawebinar.restaurant_voting_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.repository.UserRepository;
 
@@ -21,6 +22,7 @@ public class UserService {
     }
 
     public User create(User user) {
+        Assert.notNull(user, "User must be not null");
         return repository.save(user);
     }
 
@@ -33,6 +35,7 @@ public class UserService {
     }
 
     public User getByEmail(String email) {
+        Assert.notNull(email, "Email must be not null");
         return checkNotFound(repository.getByEmail(email), "email=" + email);
     }
 
@@ -41,6 +44,7 @@ public class UserService {
     }
 
     public void update(User user) {
+        Assert.notNull(user, "User must be not null");
         checkNotFoundWithId(repository.save(user), user.getId());
     }
 }

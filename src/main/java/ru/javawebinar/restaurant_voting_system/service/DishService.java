@@ -2,6 +2,7 @@ package ru.javawebinar.restaurant_voting_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.repository.DishRepository;
 
@@ -19,6 +20,7 @@ public class DishService {
     }
 
     public Dish create(Dish dish) {
+        Assert.notNull(dish, "Dish must be not null");
         return repository.save(dish);
     }
 
@@ -35,6 +37,7 @@ public class DishService {
     }
 
     public void update(Dish dish) {
+        Assert.notNull(dish, "Dish must be not null");
         checkNotFoundWithId(repository.save(dish), dish.getId());
     }
 }

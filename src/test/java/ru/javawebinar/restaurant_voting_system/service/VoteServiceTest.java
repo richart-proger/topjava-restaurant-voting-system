@@ -1,12 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.restaurant_voting_system.model.Vote;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
@@ -17,13 +12,7 @@ import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN_ID
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER_ID;
 import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
 
-@ContextConfiguration({
-        "classpath:spring/spring-app.xml",
-        "classpath:spring/spring-db.xml"
-})
-@RunWith(SpringRunner.class)
-@Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
-public class VoteServiceTest {
+public class VoteServiceTest extends AbstractServiceTest {
 
     @Autowired
     private VoteService service;
@@ -38,7 +27,7 @@ public class VoteServiceTest {
         VOTE_MATCHER.assertMatch(service.get(newId, ADMIN_ID), newVote);
 
         Collection<Vote> allVotes = service.getAllByUserId(ADMIN_ID);
-        VOTE_MATCHER.assertMatch(allVotes, vote_2, created);
+        VOTE_MATCHER.assertMatch(allVotes, VOTE_2, created);
     }
 
     @Test
@@ -55,7 +44,7 @@ public class VoteServiceTest {
     @Test
     public void get() {
         Vote vote = service.get(VOTE_ID, USER_ID);
-        VOTE_MATCHER.assertMatch(vote, vote_1);
+        VOTE_MATCHER.assertMatch(vote, VOTE_1);
     }
 
     @Test
@@ -66,13 +55,13 @@ public class VoteServiceTest {
     @Test
     public void getAll() {
         Collection<Vote> allVotes = service.getAll();
-        VOTE_MATCHER.assertMatch(allVotes, vote_2, vote_1, vote_3);
+        VOTE_MATCHER.assertMatch(allVotes, VOTE_2, VOTE_1, VOTE_3);
     }
 
     @Test
     public void getAllByUserId() {
         Collection<Vote> allVotes = service.getAllByUserId(USER_ID);
-        VOTE_MATCHER.assertMatch(allVotes, vote_1, vote_3);
+        VOTE_MATCHER.assertMatch(allVotes, VOTE_1, VOTE_3);
     }
 
     @Test
@@ -84,6 +73,6 @@ public class VoteServiceTest {
         VOTE_MATCHER.assertMatch(service.get(VOTE_ID, USER_ID), updated);
 
         Collection<Vote> allVotes = service.getAllByUserId(USER_ID);
-        VOTE_MATCHER.assertMatch(allVotes, updated, vote_3);
+        VOTE_MATCHER.assertMatch(allVotes, updated, VOTE_3);
     }
 }
