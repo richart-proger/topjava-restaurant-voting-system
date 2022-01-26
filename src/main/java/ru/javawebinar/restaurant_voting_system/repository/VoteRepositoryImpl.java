@@ -1,6 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.repository;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.model.Vote;
 
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import java.util.Collection;
 
 @Repository
+@Transactional(readOnly = true)
 public class VoteRepositoryImpl implements VoteRepository {
 
     @PersistenceContext
@@ -21,6 +23,7 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
+    @Transactional
     public Vote save(Vote vote, int userId) {
         vote.setUser(em.getReference(User.class, userId));
         if (vote.isNew()) {
@@ -33,20 +36,24 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
+    @Transactional
     public boolean delete(int id, int userId) {
-        // TODO NamedQuery
-        return false;
+        return em.createNamedQuery(Vote.DELETE)
+                .setParameter("id", id)
+                .setParameter("userId", userId)
+                .executeUpdate() != 0;
     }
 
     @Override
     public Collection<Vote> getAll() {
-        // TODO NamedQuery
-        return null;
+        return em.createNamedQuery(Vote.ALL_SORTED, Vote.class)
+                .getResultList();
     }
 
     @Override
     public Collection<Vote> getAllByUserId(int userId) {
-        // TODO NamedQuery
-        return null;
+        return em.createNamedQuery(Vote.ALL_BY_USER_ID_SORTED, Vote.class)
+                .setParameter("userId", userId)
+                .getResultList();
     }
 }
