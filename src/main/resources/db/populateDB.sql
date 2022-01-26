@@ -2,14 +2,12 @@ DELETE
 FROM user_roles;
 DELETE
 FROM dishes;
-
 DELETE
 FROM restaurants;
-
 DELETE
 FROM users;
--- DELETE
--- FROM votes;
+DELETE
+FROM votes;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password)
@@ -36,7 +34,8 @@ VALUES (100002, 'Pizza', 600),
 -- INSERT INTO dishes (restaurant_id, name, price, date)
 -- VALUES (100002, 'Pizza', 600, DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY)),
 --        (100002, 'Fettuccine', 700, DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY));
---
--- INSERT INTO votes (user_id, restaurant_id, booking_date)
--- VALUES (100000, 100002, DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY)),
---        (100001, 100004, DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY));
+
+INSERT INTO votes (user_id, restaurant_id, booking_date)
+VALUES (100000, 100002, DATE_ADD(CURRENT_DATE, INTERVAL 1 DAY)),
+       (100001, 100004, DATE_ADD(CURRENT_DATE, INTERVAL 2 DAY)),
+       (100000, 100002, DATE_SUB(CURRENT_DATE, INTERVAL 3 DAY));
