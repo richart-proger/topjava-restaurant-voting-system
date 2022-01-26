@@ -14,6 +14,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "dishes", uniqueConstraints = {@UniqueConstraint(columnNames = {"restaurant_id", "name", "date"}, name = "dishes_unique_name_date_rest_idx")})
 public class Dish extends AbstractNamedEntity {
+
     public static final String DELETE = "Dish.delete";
     public static final String ALL_SORTED = "Dish.getAllSorted";
 

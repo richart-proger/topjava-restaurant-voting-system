@@ -6,14 +6,17 @@ import java.util.Collection;
 
 public interface VoteRepository {
     // null if updated vote do not belong to userId
-    Vote save(Vote vote);
+    Vote save(Vote vote, int userId);
 
     // false if vote do not belong to userId
-    boolean delete(int id);
+    boolean delete(int id, int userId);
 
     // null if vote do not belong to userId
-    Vote get(int id);
+    Vote get(int id, int userId);
 
     // ORDERED bookingDate desc
     Collection<Vote> getAll();
+
+    // ORDERED bookingDate desc
+    Collection<Vote> getAllByUserId(int userId);
 }
