@@ -1,7 +1,15 @@
 package ru.javawebinar.restaurant_voting_system.util;
 
 import ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity;
+import ru.javawebinar.restaurant_voting_system.model.Dish;
+import ru.javawebinar.restaurant_voting_system.util.exception.EmptyMenuException;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
+import ru.javawebinar.restaurant_voting_system.util.exception.TimeExpiredException;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 
 public class ValidationUtil {
 
@@ -37,6 +45,25 @@ public class ValidationUtil {
             entity.setId(id);
         } else if (entity.getId() != id) {
             throw new IllegalArgumentException(entity + " must be with id=" + id);
+        }
+    }
+
+    public static void checkSameDate(LocalDate actualDate, LocalDate expectedDate) {
+        if (!actualDate.equals(expectedDate)) {
+            throw new DateTimeException("You can't change booking date");
+        }
+    }
+
+    public static void checkIfTimeHasExpired(LocalTime currentTime) {
+        LocalTime timeLimitForVoting = LocalTime.of(11, 0);
+        if (currentTime.isAfter(timeLimitForVoting)) {
+            throw new TimeExpiredException("It is too late, vote can't be changed");
+        }
+    }
+
+    public static void checkEmptyMenu(List<Dish> menu) {
+        if (menu.isEmpty()) {
+            throw new EmptyMenuException("You can't vote the restaurant with empty menu of the day");
         }
     }
 }

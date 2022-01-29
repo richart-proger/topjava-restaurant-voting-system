@@ -7,7 +7,8 @@ import ru.javawebinar.restaurant_voting_system.model.Vote;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
+import java.time.LocalDate;
+import java.util.List;
 
 @Repository
 @Transactional(readOnly = true)
@@ -45,15 +46,24 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public Collection<Vote> getAll() {
+    public List<Vote> getAll() {
         return em.createNamedQuery(Vote.ALL_SORTED, Vote.class)
                 .getResultList();
     }
 
     @Override
-    public Collection<Vote> getAllByUserId(int userId) {
+    public List<Vote> getAllByUserId(int userId) {
         return em.createNamedQuery(Vote.ALL_BY_USER_ID_SORTED, Vote.class)
                 .setParameter("userId", userId)
+                .getResultList();
+    }
+
+    @Override
+    public List<Vote> getBetweenPeriod(LocalDate startDate, LocalDate endDate, int userId) {
+        return em.createNamedQuery(Vote.GET_BETWEEN, Vote.class)
+                .setParameter("userId", userId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
                 .getResultList();
     }
 }

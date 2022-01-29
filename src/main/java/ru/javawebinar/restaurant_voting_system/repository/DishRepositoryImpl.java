@@ -6,6 +6,7 @@ import ru.javawebinar.restaurant_voting_system.model.Dish;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.util.List;
 
 @Repository
@@ -42,5 +43,30 @@ public class DishRepositoryImpl implements DishRepository {
     @Override
     public List<Dish> getAll() {
         return em.createNamedQuery(Dish.ALL_SORTED, Dish.class).getResultList();
+    }
+
+    @Override
+    public List<Dish> getMenu(int restaurantId, LocalDate date) {
+        return em.createNamedQuery(Dish.GET_MENU, Dish.class)
+                .setParameter("id", restaurantId)
+                .setParameter("date", date)
+                .getResultList();
+    }
+
+    @Override
+    public List<Dish> getMenuByRestaurantIdBetweenPeriod(LocalDate startDate, LocalDate endDate, int restaurantId) {
+        return em.createNamedQuery(Dish.GET_MENU_BY_RESTAURANT_ID_BETWEEN, Dish.class)
+                .setParameter("restaurantId", restaurantId)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
+    }
+
+    @Override
+    public List<Dish> getAllMenusBetweenPeriod(LocalDate startDate, LocalDate endDate) {
+        return em.createNamedQuery(Dish.GET_ALL_MENUS_BETWEEN, Dish.class)
+                .setParameter("startDate", startDate)
+                .setParameter("endDate", endDate)
+                .getResultList();
     }
 }

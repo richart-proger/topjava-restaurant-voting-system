@@ -1,6 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.restaurant_voting_system.data.UserTestData;
@@ -10,7 +10,7 @@ import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
 
 public class UserServiceTest extends AbstractServiceTest {

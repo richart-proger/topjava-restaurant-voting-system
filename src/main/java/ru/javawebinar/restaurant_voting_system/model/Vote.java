@@ -6,11 +6,14 @@ import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-
 @NamedQueries({
         @NamedQuery(name = Vote.DELETE, query = "DELETE FROM Vote v WHERE v.id=:id AND v.user.id=:userId"),
         @NamedQuery(name = Vote.ALL_SORTED, query = "SELECT v FROM Vote v ORDER BY v.bookingDate DESC"),
-        @NamedQuery(name = Vote.ALL_BY_USER_ID_SORTED, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.bookingDate DESC")
+        @NamedQuery(name = Vote.ALL_BY_USER_ID_SORTED, query = "SELECT v FROM Vote v WHERE v.user.id=:userId ORDER BY v.bookingDate DESC"),
+        @NamedQuery(name = Vote.GET_BETWEEN, query = """
+                    SELECT v FROM Vote v 
+                    WHERE v.user.id=:userId AND v.bookingDate >= :startDate AND v.bookingDate <= :endDate ORDER BY v.bookingDate DESC
+                """)
 })
 
 @Entity
@@ -20,6 +23,7 @@ public class Vote extends AbstractBaseEntity {
     public static final String DELETE = "Vote.delete";
     public static final String ALL_SORTED = "Vote.getAllSorted";
     public static final String ALL_BY_USER_ID_SORTED = "Vote.getAllByUserIdSorted";
+    public static final String GET_BETWEEN = "Vote.getBetween";
 
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "global_seq", foreignKeyDefinition = "START WITH 100000"))
     @OneToOne(fetch = FetchType.EAGER)

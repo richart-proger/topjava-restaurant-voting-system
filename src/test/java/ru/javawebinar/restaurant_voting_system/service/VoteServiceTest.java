@@ -1,13 +1,18 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.restaurant_voting_system.model.Vote;
+import ru.javawebinar.restaurant_voting_system.util.exception.EmptyMenuException;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
+import ru.javawebinar.restaurant_voting_system.util.exception.TimeExpiredException;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Collection;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN_ID;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER_ID;
 import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
@@ -27,7 +32,12 @@ public class VoteServiceTest extends AbstractServiceTest {
         VOTE_MATCHER.assertMatch(service.get(newId, ADMIN_ID), newVote);
 
         Collection<Vote> allVotes = service.getAllByUserId(ADMIN_ID);
-        VOTE_MATCHER.assertMatch(allVotes, VOTE_2, created);
+        VOTE_MATCHER.assertMatch(allVotes, created, VOTE_4, VOTE_3);
+    }
+
+    @Test
+    public void createWithEmptyMenu() {
+        assertThrows(EmptyMenuException.class, () -> service.create(getNewWithEmptyMenu(), ADMIN_ID));
     }
 
     @Test
@@ -55,24 +65,59 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         Collection<Vote> allVotes = service.getAll();
-        VOTE_MATCHER.assertMatch(allVotes, VOTE_2, VOTE_1, VOTE_3);
+        VOTE_MATCHER.assertMatch(allVotes, VOTE_5, VOTE_4, VOTE_3, VOTE_2, VOTE_1);
     }
 
     @Test
     public void getAllByUserId() {
         Collection<Vote> allVotes = service.getAllByUserId(USER_ID);
-        VOTE_MATCHER.assertMatch(allVotes, VOTE_1, VOTE_3);
+        VOTE_MATCHER.assertMatch(allVotes, VOTE_5, VOTE_2, VOTE_1);
     }
 
     @Test
     public void update() {
         Vote updated = getUpdated();
-        service.update(updated, USER_ID);
+
+        LocalTime currentTime = LocalTime.of(9, 0);
+        service.update(updated, USER_ID, currentTime);
 
         updated = getUpdated();
-        VOTE_MATCHER.assertMatch(service.get(VOTE_ID, USER_ID), updated);
+        VOTE_MATCHER.assertMatch(service.get(VOTE_5.getId(), USER_ID), updated);
 
         Collection<Vote> allVotes = service.getAllByUserId(USER_ID);
-        VOTE_MATCHER.assertMatch(allVotes, updated, VOTE_3);
+        VOTE_MATCHER.assertMatch(allVotes, updated, VOTE_2, VOTE_1);
+    }
+
+    @Test
+    public void updateNotOwn() {
+        LocalTime currentTime = LocalTime.of(9, 0);
+        assertThrows(NotFoundException.class, () -> service.update(VOTE_2, ADMIN_ID, currentTime));
+    }
+
+    @Test
+    public void updateTimeExpired() {
+        LocalTime currentTime = LocalTime.of(11, 1);
+        assertThrows(TimeExpiredException.class, () -> service.update(VOTE_1, USER_ID, currentTime));
+    }
+
+    @Test
+    public void updateWrongDate() {
+        Vote updated = getUpdated();
+        updated.setBookingDate(LocalDate.now().minusDays(1));
+        LocalTime currentTime = LocalTime.of(10, 0);
+        assertThrows(DateTimeException.class, () -> service.update(updated, USER_ID, currentTime));
+    }
+
+    @Test
+    void getBetweenInclusive() {
+        VOTE_MATCHER.assertMatch(
+                service.getBetweenInclusive(LocalDate.now().minusDays(10), LocalDate.now().minusDays(1), USER_ID),
+                VOTE_2, VOTE_1
+        );
+    }
+
+    @Test
+    void getBetweenWithNullDates() {
+        VOTE_MATCHER.assertMatch(service.getBetweenInclusive(null, null, ADMIN_ID), VOTE_4, VOTE_3);
     }
 }

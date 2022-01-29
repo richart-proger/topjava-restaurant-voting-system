@@ -1,16 +1,20 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.restaurant_voting_system.data.DishTestData;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
-import java.util.Arrays;
+import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ru.javawebinar.restaurant_voting_system.data.DishTestData.NOT_FOUND;
+import static ru.javawebinar.restaurant_voting_system.data.DishTestData.getNew;
+import static ru.javawebinar.restaurant_voting_system.data.DishTestData.getUpdated;
 import static ru.javawebinar.restaurant_voting_system.data.DishTestData.*;
+import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
 
 public class DishServiceTest extends AbstractServiceTest {
 
@@ -52,8 +56,12 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     public void getAll() {
         List<Dish> allDishes = service.getAll();
-        List<Dish> allTestDishes = Arrays.asList(DISH_1, DISH_2, DISH_3, DISH_4, DISH_5, DISH_6);
-        DISH_MATCHER.assertMatch(allDishes, allTestDishes);
+        DISH_MATCHER.assertMatch(allDishes, ALL_TEST_DISHES);
+    }
+
+    @Test
+    void getMenuByDate() {
+        DISH_MATCHER.assertMatch(service.getMenuByDate(RESTAURANT_ID, LocalDate.now()), DISH_15, DISH_16);
     }
 
     @Test
@@ -62,5 +70,31 @@ public class DishServiceTest extends AbstractServiceTest {
         service.update(updated);
         updated = getUpdated();
         DISH_MATCHER.assertMatch(service.get(DISH_ID), updated);
+    }
+
+    @Test
+    void getMenuByRestaurantIdBetweenInclusive() {
+        DISH_MATCHER.assertMatch(service.getMenuByRestaurantIdBetweenInclusive(
+                LocalDate.now().minusDays(10), LocalDate.now().minusDays(1), RESTAURANT_4.getId()), DISH_12, DISH_13, DISH_14, DISH_8, DISH_9
+        );
+    }
+
+    @Test
+    void getMenuByRestaurantIdBetweenWithNullDates() {
+        DISH_MATCHER.assertMatch(service.getMenuByRestaurantIdBetweenInclusive(
+                null, null, RESTAURANT_2.getId()), DISH_17, DISH_18, DISH_1, DISH_2
+        );
+    }
+
+    @Test
+    void getAllMenusBetweenInclusive() {
+        DISH_MATCHER.assertMatch(service.getAllMenusBetweenInclusive(
+                LocalDate.now().minusDays(2), LocalDate.now().minusDays(1)), DISH_10, DISH_11, DISH_12, DISH_13, DISH_14, DISH_6, DISH_7, DISH_8, DISH_9
+        );
+    }
+
+    @Test
+    void getAllMenusBetweenWithNullDates() {
+        DISH_MATCHER.assertMatch(service.getAllMenusBetweenInclusive(null, null), ALL_TEST_DISHES);
     }
 }

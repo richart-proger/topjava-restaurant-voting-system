@@ -2,7 +2,8 @@ package ru.javawebinar.restaurant_voting_system.repository;
 
 import ru.javawebinar.restaurant_voting_system.model.Vote;
 
-import java.util.Collection;
+import java.time.LocalDate;
+import java.util.List;
 
 public interface VoteRepository {
     // null if updated vote do not belong to userId
@@ -15,8 +16,11 @@ public interface VoteRepository {
     Vote get(int id, int userId);
 
     // ORDERED bookingDate desc
-    Collection<Vote> getAll();
+    List<Vote> getAll();
 
     // ORDERED bookingDate desc
-    Collection<Vote> getAllByUserId(int userId);
+    List<Vote> getAllByUserId(int userId);
+
+    // ORDERED bookingDate desc
+    List<Vote> getBetweenPeriod(LocalDate startDate, LocalDate endDate, int userId);
 }
