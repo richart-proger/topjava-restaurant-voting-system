@@ -20,6 +20,7 @@
 
         <!--Plugins-->
         <compiler.version>3.9.0</compiler.version>
+        <war.version>3.3.2</war.version>
         <surefire.version>3.0.0-M5</surefire.version>
 
         <!--Spring-->
@@ -153,6 +154,7 @@
         <pluginManagement>
             <plugins>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
                     <version>${compiler.version}</version>
                     <configuration>
@@ -160,7 +162,11 @@
                         <target>${java.version}</target>
                     </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>${war.version}</version>
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
