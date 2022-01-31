@@ -5,6 +5,7 @@
 ### Technology stack:
 * Java 17
 * Spring 5
+* Spring DATA JPA
 * Spring MVC
 * Hibernate
 * HyperSQL Database

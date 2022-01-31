@@ -61,7 +61,6 @@ public class DishTestData {
         updated.setName("UpdatedName");
         updated.setPrice(777);
         updated.setDate(LocalDate.now().plusDays(1));
-        updated.setRestaurant(RESTAURANT_3);
         return updated;
     }
 }

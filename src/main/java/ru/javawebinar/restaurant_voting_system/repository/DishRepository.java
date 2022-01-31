@@ -7,13 +7,13 @@ import java.util.List;
 
 public interface DishRepository {
     // null if updated dish do not belong to restaurantId
-    Dish save(Dish dish);
+    Dish save(Dish dish, int restaurantId);
 
     // false if dish do not belong to restaurantId
-    boolean delete(int id);
+    boolean delete(int id, int restaurantId);
 
     // null if dish do not belong to restaurantId
-    Dish get(int id);
+    Dish get(int id, int restaurantId);
 
     // ORDERED date desc
     List<Dish> getAll();

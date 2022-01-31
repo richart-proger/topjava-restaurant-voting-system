@@ -23,34 +23,34 @@ public class DishServiceTest extends AbstractServiceTest {
 
     @Test
     public void create() {
-        Dish created = service.create(getNew());
+        Dish created = service.create(getNew(), RESTAURANT_1.getId());
         Integer newId = created.getId();
         Dish newDish = getNew();
         newDish.setId(newId);
         DISH_MATCHER.assertMatch(created, newDish);
-        DISH_MATCHER.assertMatch(service.get(newId), newDish);
+        DISH_MATCHER.assertMatch(service.get(newId, RESTAURANT_1.getId()), newDish);
     }
 
     @Test
     public void delete() {
-        service.delete(DISH_ID);
-        assertThrows(NotFoundException.class, () -> service.get(DISH_ID));
+        service.delete(DISH_ID, RESTAURANT_2.getId());
+        assertThrows(NotFoundException.class, () -> service.get(DISH_ID, RESTAURANT_2.getId()));
     }
 
     @Test
     public void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, RESTAURANT_1.getId()));
     }
 
     @Test
     public void get() {
-        Dish dish = service.get(DISH_ID);
+        Dish dish = service.get(DISH_ID, RESTAURANT_2.getId());
         DISH_MATCHER.assertMatch(dish, DishTestData.DISH_1);
     }
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND, RESTAURANT_1.getId()));
     }
 
     @Test
@@ -67,9 +67,9 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     public void update() {
         Dish updated = getUpdated();
-        service.update(updated);
+        service.update(updated, RESTAURANT_2.getId());
         updated = getUpdated();
-        DISH_MATCHER.assertMatch(service.get(DISH_ID), updated);
+        DISH_MATCHER.assertMatch(service.get(DISH_ID, RESTAURANT_2.getId()), updated);
     }
 
     @Test

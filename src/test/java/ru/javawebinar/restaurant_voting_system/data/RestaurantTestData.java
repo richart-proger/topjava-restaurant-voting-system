@@ -3,6 +3,9 @@ package ru.javawebinar.restaurant_voting_system.data;
 import ru.javawebinar.restaurant_voting_system.MatcherFactory;
 import ru.javawebinar.restaurant_voting_system.model.Restaurant;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity.START_SEQ;
 
 public class RestaurantTestData {
@@ -24,5 +27,14 @@ public class RestaurantTestData {
         Restaurant updated = new Restaurant(RESTAURANT_1);
         updated.setName("UpdatedName");
         return updated;
+    }
+
+    public static List<Restaurant> getAllSorted(){
+        return List.of(
+                RESTAURANT_3,
+                RESTAURANT_1,
+                RESTAURANT_2,
+                RESTAURANT_4
+        );
     }
 }
