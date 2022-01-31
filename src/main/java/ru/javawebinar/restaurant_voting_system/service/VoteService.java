@@ -1,6 +1,8 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -28,6 +30,7 @@ public class VoteService {
         this.dishRepository = dishRepository;
     }
 
+    @CacheEvict(value = "votes", allEntries = true)
     public Vote create(Vote vote, int userId) {
         Assert.notNull(vote, "Vote must be not null");
         List<Dish> menu = dishRepository.getMenu(vote.getRestaurant().getId(), vote.getBookingDate());
@@ -35,6 +38,7 @@ public class VoteService {
         return voteRepository.save(vote, userId);
     }
 
+    @CacheEvict(value = "votes", allEntries = true)
     public void delete(int id, int userId) {
         checkNotFoundWithId(voteRepository.delete(id, userId), id);
     }
@@ -43,6 +47,7 @@ public class VoteService {
         return checkNotFoundWithId(voteRepository.get(id, userId), id);
     }
 
+    @Cacheable("votes")
     public List<Vote> getAll() {
         return voteRepository.getAll();
     }
@@ -55,6 +60,7 @@ public class VoteService {
         return voteRepository.getBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
 
+    @CacheEvict(value = "votes", allEntries = true)
     public void update(Vote vote, int userId, LocalTime currentTime) {
         Assert.notNull(vote, "Vote must be not null");
         Assert.notNull(currentTime, "LocalTime must be not null");

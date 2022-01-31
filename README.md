@@ -9,6 +9,7 @@
 * Spring MVC
 * Hibernate
 * HyperSQL Database
+* Ehcache 3
 * JUnit 5
 * AssertJ
 * SLF4J

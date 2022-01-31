@@ -1,7 +1,9 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import ru.javawebinar.restaurant_voting_system.data.RestaurantTestData;
 import ru.javawebinar.restaurant_voting_system.model.Restaurant;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
@@ -15,6 +17,14 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Autowired
     private RestaurantService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @BeforeEach
+    public void setup() {
+        cacheManager.getCache("restaurants").clear();
+    }
 
     @Test
     public void create() {

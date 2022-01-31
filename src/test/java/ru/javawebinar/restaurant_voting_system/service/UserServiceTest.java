@@ -1,7 +1,9 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.dao.DataAccessException;
 import ru.javawebinar.restaurant_voting_system.data.UserTestData;
 import ru.javawebinar.restaurant_voting_system.model.Role;
@@ -17,6 +19,14 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
+
+    @Autowired
+    private CacheManager cacheManager;
+
+    @BeforeEach
+    public void setup() {
+        cacheManager.getCache("users").clear();
+    }
 
     @Test
     public void create() {

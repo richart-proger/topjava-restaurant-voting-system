@@ -1,6 +1,8 @@
 package ru.javawebinar.restaurant_voting_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -23,11 +25,13 @@ public class DishService {
         this.repository = repository;
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public Dish create(Dish dish, int restaurantId) {
         Assert.notNull(dish, "Dish must be not null");
         return repository.save(dish, restaurantId);
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public void delete(int id, int restaurantId) {
         checkNotFoundWithId(repository.delete(id, restaurantId), id);
     }
@@ -36,10 +40,12 @@ public class DishService {
         return checkNotFoundWithId(repository.get(id, restaurantId), id);
     }
 
+    @Cacheable("dishes")
     public List<Dish> getAll() {
         return repository.getAll();
     }
 
+    @CacheEvict(value = "dishes", allEntries = true)
     public void update(Dish dish, int restaurantId) {
         Assert.notNull(dish, "Dish must be not null");
         checkNotFoundWithId(repository.save(dish, restaurantId), dish.getId());
