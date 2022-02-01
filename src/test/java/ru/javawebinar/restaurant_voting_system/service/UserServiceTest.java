@@ -8,6 +8,7 @@ import org.springframework.dao.DataAccessException;
 import ru.javawebinar.restaurant_voting_system.data.UserTestData;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 import ru.javawebinar.restaurant_voting_system.model.User;
+import ru.javawebinar.restaurant_voting_system.util.JpaUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
 import java.util.List;
@@ -24,9 +25,13 @@ public class UserServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    protected JpaUtil jpaUtil;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache("users").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test

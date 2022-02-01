@@ -1,5 +1,9 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
@@ -7,14 +11,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
 @Table(name = "restaurants", uniqueConstraints = {@UniqueConstraint(columnNames = "name", name = "restaurants_unique_name_idx")})
 public class Restaurant extends AbstractNamedEntity {
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("date desc")
     private Set<Dish> restaurantMenu = new HashSet<>();
 
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("bookingDate DESC")
     private List<Vote> votes;

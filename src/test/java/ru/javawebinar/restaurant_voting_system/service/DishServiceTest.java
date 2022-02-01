@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import ru.javawebinar.restaurant_voting_system.data.DishTestData;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
+import ru.javawebinar.restaurant_voting_system.util.JpaUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
 import java.time.LocalDate;
@@ -24,9 +25,13 @@ public class DishServiceTest extends AbstractServiceTest {
     @Autowired
     private CacheManager cacheManager;
 
+    @Autowired
+    protected JpaUtil jpaUtil;
+
     @BeforeEach
     public void setup() {
         cacheManager.getCache("dishes").clear();
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     @Test

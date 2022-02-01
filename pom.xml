@@ -168,6 +168,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
 
         <!--https://medium.com/criciumadev/its-time-migrating-to-java-11-5eb3868354f9-->
         <dependency>
