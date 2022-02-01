@@ -22,7 +22,9 @@ public class VoteTestData {
     public static final Vote VOTE_4 = new Vote(VOTE_ID + 3, ADMIN, RESTAURANT_3, LocalDate.now().minusDays(1));
     public static final Vote VOTE_5 = new Vote(VOTE_ID + 4, USER, RESTAURANT_1, LocalDate.now());
 
-    public static Vote getNew() {
+    public static final Vote ADMIN_VOTE = new Vote(VOTE_3);
+
+    public static Vote getNewVote() {
         return new Vote(null, null, RESTAURANT_2, LocalDate.now());
     }
 
@@ -30,7 +32,7 @@ public class VoteTestData {
         return new Vote(null, null, RESTAURANT_4, LocalDate.now());
     }
 
-    public static Vote getUpdated() {
+    public static Vote getUpdatedVote() {
         Vote updated = new Vote(VOTE_5);
         updated.setRestaurant(RESTAURANT_2);
         return updated;

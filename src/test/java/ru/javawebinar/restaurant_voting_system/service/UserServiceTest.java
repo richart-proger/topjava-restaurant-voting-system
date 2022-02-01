@@ -14,6 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
+import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
 
 public class UserServiceTest extends AbstractServiceTest {
 
@@ -52,7 +53,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void deletedNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(UserTestData.NOT_FOUND));
     }
 
     @Test
@@ -63,7 +64,7 @@ public class UserServiceTest extends AbstractServiceTest {
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(UserTestData.NOT_FOUND));
     }
 
     @Test
@@ -84,5 +85,18 @@ public class UserServiceTest extends AbstractServiceTest {
         service.update(updated);
         updated = getUpdated();
         USER_MATCHER.assertMatch(service.get(USER_ID), updated);
+    }
+
+    @Test
+    public void getWithVotes() {
+        User user = service.getWithVotes(USER_ID);
+        USER_MATCHER.assertMatch(user, USER);
+        VOTE_MATCHER.assertMatch(user.getVotes(), VOTE_5, VOTE_2, VOTE_1);
+    }
+
+    @Test
+    public void getWithVotesNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithVotes(1));
     }
 }

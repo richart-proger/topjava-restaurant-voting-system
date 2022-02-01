@@ -68,4 +68,12 @@ public class VoteService {
         checkIfTimeHasExpired(currentTime);
         checkNotFoundWithId(voteRepository.save(vote, userId), vote.getId());
     }
+
+    public Vote getWithUser(int id, int userId) {
+        return checkNotFoundWithId(voteRepository.getWithUser(id, userId), id);
+    }
+
+    public Vote getWithRestaurant(int id, int restaurantId) {
+        return checkNotFoundWithId(voteRepository.getWithRestaurant(id, restaurantId), id);
+    }
 }

@@ -36,4 +36,14 @@ public class DataJpaRestaurantRepository implements RestaurantRepository {
     public List<Restaurant> getAll() {
         return crudRestaurantRepository.findAll(SORT_NAME);
     }
+
+    @Override
+    public Restaurant getWithDishes(int id) {
+        return crudRestaurantRepository.getWithDishes(id);
+    }
+
+    @Override
+    public Restaurant getWithVotes(int id) {
+        return crudRestaurantRepository.getWithVotes(id);
+    }
 }

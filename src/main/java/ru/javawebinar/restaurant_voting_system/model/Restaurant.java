@@ -4,6 +4,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -13,6 +14,10 @@ public class Restaurant extends AbstractNamedEntity {
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("date desc")
     private Set<Dish> restaurantMenu = new HashSet<>();
+
+    @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+    @OrderBy("bookingDate DESC")
+    private List<Vote> votes;
 
     public Restaurant(Set<Dish> menu) {
         this.restaurantMenu = menu;
@@ -41,6 +46,14 @@ public class Restaurant extends AbstractNamedEntity {
 
     public void setMenu(Set<Dish> menu) {
         this.restaurantMenu = CollectionUtils.isEmpty(menu) ? null : Set.copyOf(menu);
+    }
+
+    public List<Vote> getVotes() {
+        return votes;
+    }
+
+    public void setVotes(List<Vote> votes) {
+        this.votes = votes;
     }
 
     @Override

@@ -62,4 +62,8 @@ public class DishService {
     public List<Dish> getAllMenusBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate) {
         return repository.getAllMenusBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate));
     }
+
+    public Dish getWithRestaurant(int id, int restaurantId) {
+        return checkNotFoundWithId(repository.getWithRestaurant(id, restaurantId), id);
+    }
 }

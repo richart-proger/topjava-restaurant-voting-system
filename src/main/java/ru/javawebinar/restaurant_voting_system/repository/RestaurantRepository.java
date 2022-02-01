@@ -15,4 +15,12 @@ public interface RestaurantRepository {
     Restaurant get(int id);
 
     List<Restaurant> getAll();
+
+    default Restaurant getWithDishes(int id) {
+        throw new UnsupportedOperationException();
+    }
+
+    default Restaurant getWithVotes(int id) {
+        throw new UnsupportedOperationException();
+    }
 }

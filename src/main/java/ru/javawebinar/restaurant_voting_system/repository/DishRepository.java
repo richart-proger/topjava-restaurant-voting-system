@@ -26,4 +26,8 @@ public interface DishRepository {
 
     // ORDERED date desc
     List<Dish> getAllMenusBetweenPeriod(LocalDate startDate, LocalDate endDate);
+
+    default Dish getWithRestaurant(int id, int restaurantId) {
+        throw new UnsupportedOperationException();
+    }
 }

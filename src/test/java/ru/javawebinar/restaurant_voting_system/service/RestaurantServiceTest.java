@@ -11,7 +11,9 @@ import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static ru.javawebinar.restaurant_voting_system.data.DishTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
+import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
 
@@ -28,9 +30,9 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void create() {
-        Restaurant created = service.create(getNew());
+        Restaurant created = service.create(getNewRestaurant());
         Integer newId = created.getId();
-        Restaurant newRestaurant = getNew();
+        Restaurant newRestaurant = getNewRestaurant();
         newRestaurant.setId(newId);
         RESTAURANT_MATCHER.assertMatch(created, newRestaurant);
         RESTAURANT_MATCHER.assertMatch(service.get(newId), newRestaurant);
@@ -44,7 +46,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void deleteNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(RestaurantTestData.NOT_FOUND));
     }
 
     @Test
@@ -55,7 +57,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(RestaurantTestData.NOT_FOUND));
     }
 
     @Test
@@ -66,9 +68,36 @@ public class RestaurantServiceTest extends AbstractServiceTest {
 
     @Test
     public void update() {
-        Restaurant updated = getUpdated();
+        Restaurant updated = getUpdatedRestaurant();
         service.update(updated);
-        updated = getUpdated();
+        updated = getUpdatedRestaurant();
         RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT_ID), updated);
+    }
+
+    @Test
+    public void getWithDishes() {
+        Restaurant restaurant = service.getWithDishes(RESTAURANT_ID);
+        RESTAURANT_MATCHER.assertMatch(restaurant, RESTAURANT_1);
+        DISH_MATCHER.assertMatch(restaurant.getMenu(),
+                DISH_15, DISH_16, DISH_3, DISH_4, DISH_5);
+    }
+
+    @Test
+    public void getWithDishesNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithDishes(1));
+    }
+
+    @Test
+    public void getWithVotes() {
+        Restaurant restaurant = service.getWithVotes(RESTAURANT_3.getId());
+        RESTAURANT_MATCHER.assertMatch(restaurant, getVoted());
+        VOTE_MATCHER.assertMatch(restaurant.getVotes(), VOTE_5, VOTE_4, VOTE_3);
+    }
+
+    @Test
+    public void getWithVotesNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithVotes(1));
     }
 }

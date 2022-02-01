@@ -23,4 +23,12 @@ public interface VoteRepository {
 
     // ORDERED bookingDate desc
     List<Vote> getBetweenPeriod(LocalDate startDate, LocalDate endDate, int userId);
+
+    default Vote getWithUser(int id, int userId) {
+        throw new UnsupportedOperationException();
+    }
+
+    default Vote getWithRestaurant(int id, int restaurantId) {
+        throw new UnsupportedOperationException();
+    }
 }

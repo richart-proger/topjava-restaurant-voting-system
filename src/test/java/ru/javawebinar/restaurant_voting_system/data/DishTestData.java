@@ -44,6 +44,8 @@ public class DishTestData {
     public static final Dish DISH_19 = new Dish(DISH_ID + 18, "Ratatouille", 700, LocalDate.now(), RESTAURANT_3);
     public static final Dish DISH_20 = new Dish(DISH_ID + 19, "Onion soup", 500, LocalDate.now(), RESTAURANT_3);
 
+    public static final Dish RESTAURANT_DISH = new Dish(DISH_3);
+
     public static final List<Dish> ALL_TEST_DISHES = List.of(
             DISH_20, DISH_18, DISH_17,
             DISH_16, DISH_15, DISH_19, DISH_14, DISH_13,

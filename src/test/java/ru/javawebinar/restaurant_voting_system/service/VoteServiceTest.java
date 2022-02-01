@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import ru.javawebinar.restaurant_voting_system.data.VoteTestData;
 import ru.javawebinar.restaurant_voting_system.model.Vote;
 import ru.javawebinar.restaurant_voting_system.util.exception.EmptyMenuException;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
@@ -15,8 +16,9 @@ import java.time.LocalTime;
 import java.util.Collection;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN_ID;
-import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER_ID;
+import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.RESTAURANT_3;
+import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.RESTAURANT_MATCHER;
+import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
 
 public class VoteServiceTest extends AbstractServiceTest {
@@ -34,9 +36,9 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void create() {
-        Vote created = service.create(getNew(), ADMIN_ID);
+        Vote created = service.create(getNewVote(), ADMIN_ID);
         Integer newId = created.getId();
-        Vote newVote = getNew();
+        Vote newVote = getNewVote();
         newVote.setId(newId);
         VOTE_MATCHER.assertMatch(created, newVote);
         VOTE_MATCHER.assertMatch(service.get(newId, ADMIN_ID), newVote);
@@ -58,7 +60,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void deletedNotFound() {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(VoteTestData.NOT_FOUND, USER_ID));
     }
 
     @Test
@@ -69,7 +71,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void getNotFound() {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND, USER_ID));
+        assertThrows(NotFoundException.class, () -> service.get(VoteTestData.NOT_FOUND, USER_ID));
     }
 
     @Test
@@ -86,12 +88,12 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void update() {
-        Vote updated = getUpdated();
+        Vote updated = getUpdatedVote();
 
         LocalTime currentTime = LocalTime.of(9, 0);
         service.update(updated, USER_ID, currentTime);
 
-        updated = getUpdated();
+        updated = getUpdatedVote();
         VOTE_MATCHER.assertMatch(service.get(VOTE_5.getId(), USER_ID), updated);
 
         Collection<Vote> allVotes = service.getAllByUserId(USER_ID);
@@ -112,7 +114,7 @@ public class VoteServiceTest extends AbstractServiceTest {
 
     @Test
     public void updateWrongDate() {
-        Vote updated = getUpdated();
+        Vote updated = getUpdatedVote();
         updated.setBookingDate(LocalDate.now().minusDays(1));
         LocalTime currentTime = LocalTime.of(10, 0);
         assertThrows(DateTimeException.class, () -> service.update(updated, USER_ID, currentTime));
@@ -129,5 +131,31 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
     void getBetweenWithNullDates() {
         VOTE_MATCHER.assertMatch(service.getBetweenInclusive(null, null, ADMIN_ID), VOTE_4, VOTE_3);
+    }
+
+    @Test
+    public void getWithUser() {
+        Vote adminVote = service.getWithUser(ADMIN_VOTE.getId(), ADMIN_ID);
+        VOTE_MATCHER.assertMatch(adminVote, ADMIN_VOTE);
+        USER_MATCHER.assertMatch(adminVote.getUser(), ADMIN);
+    }
+
+    @Test
+    public void getWithUserNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithUser(1, ADMIN_ID));
+    }
+
+    @Test
+    public void getWithRestaurant() {
+        Vote adminVote = service.getWithRestaurant(ADMIN_VOTE.getId(), RESTAURANT_3.getId());
+        VOTE_MATCHER.assertMatch(adminVote, ADMIN_VOTE);
+        RESTAURANT_MATCHER.assertMatch(adminVote.getRestaurant(), RESTAURANT_3);
+    }
+
+    @Test
+    public void getWithRestaurantNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithRestaurant(1, RESTAURANT_3.getId()));
     }
 }

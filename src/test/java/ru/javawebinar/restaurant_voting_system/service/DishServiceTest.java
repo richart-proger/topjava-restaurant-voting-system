@@ -13,8 +13,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.DishTestData.NOT_FOUND;
-import static ru.javawebinar.restaurant_voting_system.data.DishTestData.getNew;
-import static ru.javawebinar.restaurant_voting_system.data.DishTestData.getUpdated;
 import static ru.javawebinar.restaurant_voting_system.data.DishTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
 
@@ -106,5 +104,18 @@ public class DishServiceTest extends AbstractServiceTest {
     @Test
     void getAllMenusBetweenWithNullDates() {
         DISH_MATCHER.assertMatch(service.getAllMenusBetweenInclusive(null, null), ALL_TEST_DISHES);
+    }
+
+    @Test
+    public void getWithRestaurant() {
+        Dish restaurantDish = service.getWithRestaurant(RESTAURANT_DISH.getId(), RESTAURANT_ID);
+        DISH_MATCHER.assertMatch(restaurantDish, RESTAURANT_DISH);
+        RESTAURANT_MATCHER.assertMatch(restaurantDish.getRestaurant(), RESTAURANT_1);
+    }
+
+    @Test
+    public void getWithRestaurantNotFound() {
+        assertThrows(NotFoundException.class,
+                () -> service.getWithRestaurant(1, RESTAURANT_ID));
     }
 }

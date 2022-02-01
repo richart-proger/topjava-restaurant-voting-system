@@ -63,4 +63,9 @@ public class DataJpaDishRepository implements DishRepository {
     public List<Dish> getAllMenusBetweenPeriod(LocalDate startDate, LocalDate endDate) {
         return crudDishRepository.getAllMenusBetweenPeriod(startDate, endDate);
     }
+
+    @Override
+    public Dish getWithRestaurant(int id, int userId) {
+        return crudDishRepository.getWithRestaurant(id, userId);
+    }
 }

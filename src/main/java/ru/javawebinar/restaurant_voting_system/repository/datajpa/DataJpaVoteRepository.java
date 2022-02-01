@@ -59,4 +59,14 @@ public class DataJpaVoteRepository implements VoteRepository {
     public List<Vote> getBetweenPeriod(LocalDate startDate, LocalDate endDate, int userId) {
         return crudVoteRepository.getByUserIdBetweenPeriod(startDate, endDate, userId);
     }
+
+    @Override
+    public Vote getWithUser(int id, int userId) {
+        return crudVoteRepository.getWithUser(id, userId);
+    }
+
+    @Override
+    public Vote getWithRestaurant(int id, int restaurantId) {
+        return crudVoteRepository.getWithRestaurant(id, restaurantId);
+    }
 }

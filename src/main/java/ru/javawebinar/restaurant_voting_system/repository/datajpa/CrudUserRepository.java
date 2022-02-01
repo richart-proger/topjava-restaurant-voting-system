@@ -22,4 +22,7 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
             @QueryHint(name = org.hibernate.jpa.QueryHints.HINT_PASS_DISTINCT_THROUGH, value = "false")
     })
     User getByEmail(String email);
+
+    @Query("SELECT u FROM User u LEFT JOIN FETCH u.votes WHERE u.id = ?1")
+    User getWithVotes(int id);
 }
