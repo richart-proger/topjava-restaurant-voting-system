@@ -1,5 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.repository.datajpa;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,6 +27,7 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     @Query("SELECT d FROM Dish d WHERE d.date >= :startDate AND d.date <= :endDate ORDER BY d.date DESC")
     List<Dish> getAllMenusBetweenPeriod(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
-    @Query("SELECT d FROM Dish d JOIN FETCH d.restaurant WHERE d.id = ?1 and d.restaurant.id = ?2")
+    @EntityGraph(attributePaths = {"restaurant"})
+    @Query("SELECT d FROM Dish d WHERE d.id = ?1 and d.restaurant.id = ?2")
     Dish getWithRestaurant(int id, int restaurantId);
 }

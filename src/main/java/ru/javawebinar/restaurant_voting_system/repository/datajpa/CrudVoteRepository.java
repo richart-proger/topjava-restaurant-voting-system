@@ -1,5 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.repository.datajpa;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,9 +25,11 @@ public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v from Vote v WHERE v.user.id=:userId AND v.bookingDate >= :startDate AND v.bookingDate < :endDate ORDER BY v.bookingDate DESC")
     List<Vote> getByUserIdBetweenPeriod(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate, @Param("userId") int userId);
 
-    @Query("SELECT v FROM Vote v JOIN FETCH v.user WHERE v.id = ?1 and v.user.id = ?2")
+    @EntityGraph(attributePaths = {"user"})
+    @Query("SELECT v FROM Vote v WHERE v.id = ?1 and v.user.id = ?2")
     Vote getWithUser(int id, int userId);
 
-    @Query("SELECT v FROM Vote v JOIN FETCH v.restaurant WHERE v.id = ?1 and v.restaurant.id = ?2")
+    @EntityGraph(attributePaths = {"restaurant"})
+    @Query("SELECT v FROM Vote v WHERE v.id = ?1 and v.restaurant.id = ?2")
     Vote getWithRestaurant(int id, int restaurantId);
 }

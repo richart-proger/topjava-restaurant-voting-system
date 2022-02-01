@@ -1,5 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.repository.datajpa;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -14,9 +15,11 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Inte
     @Query("DELETE FROM Restaurant r WHERE r.id=?1")
     int delete(int id);
 
-    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.restaurantMenu WHERE r.id = ?1")
+    @EntityGraph(attributePaths = {"restaurantMenu"})
+    @Query("SELECT r FROM Restaurant r WHERE r.id = ?1")
     Restaurant getWithDishes(int id);
 
-    @Query("SELECT r FROM Restaurant r LEFT JOIN FETCH r.votes WHERE r.id = ?1")
+    @EntityGraph(attributePaths = {"votes"})
+    @Query("SELECT r FROM Restaurant r WHERE r.id = ?1")
     Restaurant getWithVotes(int id);
 }
