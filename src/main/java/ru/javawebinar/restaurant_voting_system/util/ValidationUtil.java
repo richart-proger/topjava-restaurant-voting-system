@@ -1,5 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.util;
 
+import org.springframework.core.NestedExceptionUtils;
+import org.springframework.lang.NonNull;
 import ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.util.exception.EmptyMenuException;
@@ -65,5 +67,12 @@ public class ValidationUtil {
         if (menu.isEmpty()) {
             throw new EmptyMenuException("You can't vote the restaurant with empty menu of the day");
         }
+    }
+
+    //  https://stackoverflow.com/a/65442410/548473
+    @NonNull
+    public static Throwable getRootCause(@NonNull Throwable t) {
+        Throwable rootCause = NestedExceptionUtils.getRootCause(t);
+        return rootCause != null ? rootCause : t;
     }
 }

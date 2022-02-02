@@ -9,6 +9,7 @@ import ru.javawebinar.restaurant_voting_system.model.Restaurant;
 import ru.javawebinar.restaurant_voting_system.util.JpaUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -104,5 +105,11 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     public void getWithVotesNotFound() {
         assertThrows(NotFoundException.class,
                 () -> service.getWithVotes(1));
+    }
+
+    @Test
+    void createWithException() throws Exception {
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "  ")));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Restaurant(null, "a")));
     }
 }

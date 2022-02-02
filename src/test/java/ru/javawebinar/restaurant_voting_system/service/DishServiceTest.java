@@ -9,6 +9,7 @@ import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.util.JpaUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -122,5 +123,13 @@ public class DishServiceTest extends AbstractServiceTest {
     public void getWithRestaurantNotFound() {
         assertThrows(NotFoundException.class,
                 () -> service.getWithRestaurant(1, RESTAURANT_ID));
+    }
+
+    @Test
+    public void createWithException() throws Exception {
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Dish(null, "  ", 300, LocalDate.now(), RESTAURANT_1), RESTAURANT_ID));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Dish(null, "Dish name", 300, null, RESTAURANT_1), RESTAURANT_ID));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Dish(null, "Dish name", 9, LocalDate.now(), RESTAURANT_1), RESTAURANT_ID));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new Dish(null, "Dish name", 5001, LocalDate.now(), RESTAURANT_1), RESTAURANT_ID));
     }
 }

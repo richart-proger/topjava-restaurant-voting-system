@@ -11,7 +11,9 @@ import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.util.JpaUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.*;
@@ -103,5 +105,13 @@ public class UserServiceTest extends AbstractServiceTest {
     public void getWithVotesNotFound() {
         assertThrows(NotFoundException.class,
                 () -> service.getWithVotes(1));
+    }
+
+    @Test
+    void createWithException() throws Exception {
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "  ", "mail@yandex.ru", "password", Role.USER)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "User", "  ", "password", Role.USER)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "User", "mail@yandex.ru", "  ", Role.USER)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "User", "mail@yandex.ru", "password", true, null, Set.of())));
     }
 }

@@ -2,8 +2,10 @@ package ru.javawebinar.restaurant_voting_system.model;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -12,14 +14,18 @@ import java.time.LocalDate;
 public class Dish extends AbstractNamedEntity {
 
     @Column(name = "price", nullable = false)
+    @Range(min = 10, max = 5000)
+    @NotNull
     private Integer price;
 
     @Column(name = "date", nullable = false, columnDefinition = "date default now()")
+    @NotNull
     private LocalDate date;
 
     @JoinColumn(name = "restaurant_id", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
 //    @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Restaurant restaurant;
 
     public Dish() {
