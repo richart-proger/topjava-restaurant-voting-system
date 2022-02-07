@@ -26,18 +26,22 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
-    public Dish create(Dish dish, int restaurantId) {
+    public Dish create(Dish dish) {
         Assert.notNull(dish, "Dish must be not null");
-        return repository.save(dish, restaurantId);
+        return repository.save(dish);
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
-    public void delete(int id, int restaurantId) {
-        checkNotFoundWithId(repository.delete(id, restaurantId), id);
+    public void delete(int id) {
+        checkNotFoundWithId(repository.delete(id), id);
     }
 
-    public Dish get(int id, int restaurantId) {
-        return checkNotFoundWithId(repository.get(id, restaurantId), id);
+    public Dish getByRestaurantId(int id, int restaurantId) {
+        return checkNotFoundWithId(repository.getByRestaurantId(id, restaurantId), id);
+    }
+
+    public Dish get(int id) {
+        return checkNotFoundWithId(repository.get(id), id);
     }
 
     @Cacheable("dishes")
@@ -46,21 +50,25 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
-    public void update(Dish dish, int restaurantId) {
+    public void update(Dish dish) {
         Assert.notNull(dish, "Dish must be not null");
-        checkNotFoundWithId(repository.save(dish, restaurantId), dish.getId());
+        checkNotFoundWithId(repository.save(dish), dish.getId());
     }
 
-    public List<Dish> getMenuByDate(int restaurantId, LocalDate date) {
-        return checkNotFoundWithId(repository.getMenu(restaurantId, date), restaurantId);
+    public List<Dish> getDishByDate(int restaurantId, LocalDate date) {
+        return checkNotFoundWithId(repository.getDish(restaurantId, date), restaurantId);
     }
 
-    public List<Dish> getMenuByRestaurantIdBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int restaurantId) {
-        return repository.getMenuByRestaurantIdBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), restaurantId);
+    public List<Dish> getDishByRestaurantIdBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate, int restaurantId) {
+        return repository.getDishByRestaurantIdBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), restaurantId);
     }
 
-    public List<Dish> getAllMenusBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate) {
-        return repository.getAllMenusBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate));
+    public List<Dish> getAllDishByRestaurantId(int restaurantId) {
+        return repository.getAllDishByRestaurantId(restaurantId);
+    }
+
+    public List<Dish> getAllDishBetweenInclusive(@Nullable LocalDate startDate, @Nullable LocalDate endDate) {
+        return repository.getAllDishBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate));
     }
 
     public Dish getWithRestaurant(int id, int restaurantId) {

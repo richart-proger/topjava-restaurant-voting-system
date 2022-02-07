@@ -6,26 +6,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface DishRepository {
-    // null if updated dish do not belong to restaurantId
-    Dish save(Dish dish, int restaurantId);
 
-    // false if dish do not belong to restaurantId
-    boolean delete(int id, int restaurantId);
+    // null if not found, when updated
+    Dish save(Dish dish);
+
+    // false if not found
+    boolean delete(int id);
 
     // null if dish do not belong to restaurantId
-    Dish get(int id, int restaurantId);
+    Dish getByRestaurantId(int id, int restaurantId);
+
+    // null if not found
+    Dish get(int id);
 
     // ORDERED date desc
     List<Dish> getAll();
 
     // ORDERED date desc
-    List<Dish> getMenu(int restaurantId, LocalDate date);
+    List<Dish> getDish(int restaurantId, LocalDate date);
 
     // ORDERED date desc
-    List<Dish> getMenuByRestaurantIdBetweenPeriod(LocalDate startDate, LocalDate endDate, int restaurantId);
+    List<Dish> getDishByRestaurantIdBetweenPeriod(LocalDate startDate, LocalDate endDate, int restaurantId);
 
     // ORDERED date desc
-    List<Dish> getAllMenusBetweenPeriod(LocalDate startDate, LocalDate endDate);
+    List<Dish> getAllDishByRestaurantId(int restaurantId);
+
+    // ORDERED date desc
+    List<Dish> getAllDishBetweenPeriod(LocalDate startDate, LocalDate endDate);
 
     default Dish getWithRestaurant(int id, int restaurantId) {
         throw new UnsupportedOperationException();

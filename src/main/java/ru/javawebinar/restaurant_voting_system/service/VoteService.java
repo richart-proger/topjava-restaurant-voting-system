@@ -30,7 +30,7 @@ public class VoteService {
 
     public Vote create(Vote vote, int userId) {
         Assert.notNull(vote, "Vote must be not null");
-        List<Dish> menu = dishRepository.getMenu(vote.getRestaurant().getId(), vote.getBookingDate());
+        List<Dish> menu = dishRepository.getDish(vote.getRestaurant().getId(), vote.getBookingDate());
         checkEmptyMenu(menu);
         return voteRepository.save(vote, userId);
     }
