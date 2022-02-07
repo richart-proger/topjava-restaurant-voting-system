@@ -56,6 +56,8 @@
         <ehcache.version>3.9.9</ehcache.version>
         <javax.cache.version>1.1.1</javax.cache.version>
 
+        <!--JSON-->
+        <jackson.version>2.13.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -159,7 +161,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Cache -->
+        <!--Cache-->
         <dependency>
             <groupId>javax.cache</groupId>
             <artifactId>cache-api</artifactId>
@@ -190,6 +192,22 @@
             <version>2.4.0-b180830.0438</version>
         </dependency>
 
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-hibernate5</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
     </dependencies>
 
