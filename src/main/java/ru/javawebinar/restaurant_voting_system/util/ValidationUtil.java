@@ -13,6 +13,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+import static ru.javawebinar.restaurant_voting_system.util.DateUtil.TIME_LIMIT_FOR_VOTING;
+
 public class ValidationUtil {
 
     public static <T> T checkNotFoundWithId(T object, int id) {
@@ -57,9 +59,8 @@ public class ValidationUtil {
     }
 
     public static void checkIfTimeHasExpired(LocalTime currentTime) {
-        LocalTime timeLimitForVoting = LocalTime.of(11, 0);
-        if (currentTime.isAfter(timeLimitForVoting)) {
-            throw new TimeExpiredException("It is too late, vote can't be changed");
+        if (currentTime.isAfter(TIME_LIMIT_FOR_VOTING)) {
+            throw new TimeExpiredException("You have already voted today. It is too late, vote can't be changed");
         }
     }
 
