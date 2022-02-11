@@ -1,34 +1,29 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import ru.javawebinar.restaurant_voting_system.model.Restaurant;
-import ru.javawebinar.restaurant_voting_system.model.User;
-
 import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 
 public class VoteTo {
 
-    @JsonProperty(value = "vote_id")
     private Integer id;
 
-    @JsonProperty(value = "vote_user")
-    private User user;
+    private Integer userId;
 
-    @JsonProperty(value = "vote_restaurant")
-    private Restaurant restaurant;
+    private Integer restaurantId;
 
-    @JsonProperty(value = "vote_booking_date")
+    private String restaurantName;
+
     private LocalDate bookingDate;
 
     public VoteTo() {
     }
 
-    @ConstructorProperties({"vote_id", "vote_user", "vote_restaurant", "vote_booking_date"})
-    public VoteTo(Integer id, User user, Restaurant restaurant, LocalDate bookingDate) {
+    @ConstructorProperties({"id", "userId", "restaurantId", "restaurantName", "bookingDate"})
+    public VoteTo(Integer id, Integer userId, Integer restaurantId, String restaurantName, LocalDate bookingDate) {
         this.id = id;
-        this.user = user;
-        this.restaurant = restaurant;
+        this.userId = userId;
+        this.restaurantId = restaurantId;
+        this.restaurantName = restaurantName;
         this.bookingDate = bookingDate;
     }
 
@@ -40,20 +35,28 @@ public class VoteTo {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
-    public Restaurant getRestaurant() {
-        return restaurant;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setRestaurant(Restaurant restaurant) {
-        this.restaurant = restaurant;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getRestaurantId() {
+        return restaurantId;
+    }
+
+    public void setRestaurantId(Integer restaurantId) {
+        this.restaurantId = restaurantId;
     }
 
     public LocalDate getBookingDate() {

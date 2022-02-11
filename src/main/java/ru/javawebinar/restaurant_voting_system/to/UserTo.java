@@ -1,6 +1,5 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 
 import java.beans.ConstructorProperties;
@@ -9,31 +8,24 @@ import java.util.Set;
 
 public class UserTo {
 
-    @JsonProperty(value = "user_id")
     private Integer id;
 
-    @JsonProperty(value = "user_name")
     private String name;
 
-    @JsonProperty(value = "email")
     private String email;
 
-    @JsonProperty(value = "password")
     private String password;
 
-    @JsonProperty(value = "enabled")
     private boolean enabled;
 
-    @JsonProperty(value = "registered")
     private Date registered;
 
-    @JsonProperty(value = "roles")
     private Set<Role> roles;
 
     public UserTo() {
     }
 
-    @ConstructorProperties({"user_id", "user_name", "email", "password", "enabled", "registered", "roles"})
+    @ConstructorProperties({"userId", "userName", "email", "password", "enabled", "registered", "roles"})
     public UserTo(Integer id, String name, String email, String password, boolean enabled, Date registered, Set<Role> roles) {
         this.id = id;
         this.name = name;

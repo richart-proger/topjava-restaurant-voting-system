@@ -1,42 +1,28 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 import java.util.List;
 
 public class MenuTo {
 
-    @JsonProperty(value = "restaurant_id")
     private Integer restaurantId;
 
-    @JsonProperty(value = "restaurant_name")
     private String restaurantName;
 
-    @JsonIgnore
     private LocalDate menuDate;
 
-    @JsonProperty(value = "menu")
     private List<DishTo> menu;
 
     public MenuTo() {
     }
 
-    @ConstructorProperties({"restaurant_id", "restaurant_name", "menu", "date"})
-    public MenuTo(Integer restaurantId, String restaurantName, List<DishTo> menu, LocalDate menuDate) {
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.menu = menu;
-        this.menuDate = menuDate;
-    }
-
-    @ConstructorProperties({"restaurant_id", "restaurant_name", "date"})
-    public MenuTo(Integer restaurantId, String restaurantName, LocalDate menuDate) {
-        this.restaurantId = restaurantId;
-        this.restaurantName = restaurantName;
-        this.menuDate = menuDate;
+    @ConstructorProperties({"id", "name", "restaurantName", "date"})
+    public MenuTo(Integer id, String name, List<DishTo> restaurantName, LocalDate date) {
+        this.restaurantId = id;
+        this.restaurantName = name;
+        this.menu = restaurantName;
+        this.menuDate = date;
     }
 
     public Integer getRestaurantId() {
