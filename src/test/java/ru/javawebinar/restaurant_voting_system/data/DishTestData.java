@@ -10,7 +10,7 @@ import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
 import static ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity.START_SEQ;
 
 public class DishTestData {
-    public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator("restaurant");
+    public static final MatcherFactory.Matcher<Dish> DISH_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Dish.class, "restaurant");
 
     public static final int DISH_ID = START_SEQ + 6;
     public static final int NOT_FOUND = 42;

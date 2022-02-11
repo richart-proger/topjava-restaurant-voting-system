@@ -3,6 +3,7 @@ package ru.javawebinar.restaurant_voting_system.data;
 import ru.javawebinar.restaurant_voting_system.MatcherFactory;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 import ru.javawebinar.restaurant_voting_system.model.User;
+import ru.javawebinar.restaurant_voting_system.to.UserTo;
 
 import java.util.Collections;
 import java.util.Date;
@@ -10,7 +11,9 @@ import java.util.Date;
 import static ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity.START_SEQ;
 
 public class UserTestData {
-    public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator("registered", "roles", "votes");
+    public static final MatcherFactory.Matcher<User> USER_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(User.class, "registered", "roles", "votes");
+
+    public static final MatcherFactory.Matcher<UserTo> USER_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(UserTo.class, "registered", "roles", "votes");
 
     public static final int USER_ID = START_SEQ;
     public static final int ADMIN_ID = START_SEQ + 1;

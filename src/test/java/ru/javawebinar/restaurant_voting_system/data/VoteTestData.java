@@ -2,6 +2,7 @@ package ru.javawebinar.restaurant_voting_system.data;
 
 import ru.javawebinar.restaurant_voting_system.MatcherFactory;
 import ru.javawebinar.restaurant_voting_system.model.Vote;
+import ru.javawebinar.restaurant_voting_system.to.VoteTo;
 
 import java.time.LocalDate;
 
@@ -11,7 +12,9 @@ import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER;
 import static ru.javawebinar.restaurant_voting_system.model.AbstractBaseEntity.START_SEQ;
 
 public class VoteTestData {
-    public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator("restaurant", "user");
+    public static final MatcherFactory.Matcher<Vote> VOTE_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(Vote.class, "restaurant", "user", "email", "restaurantName");
+
+    public static final MatcherFactory.Matcher<VoteTo> VOTE_TO_MATCHER = MatcherFactory.usingIgnoringFieldsComparator(VoteTo.class, "restaurant", "user", "email", "restaurantName");
 
     public static final int VOTE_ID = START_SEQ + 26;
     public static final int NOT_FOUND = 42;
@@ -25,16 +28,23 @@ public class VoteTestData {
     public static final Vote ADMIN_VOTE = new Vote(VOTE_3);
 
     public static Vote getNewVote() {
-        return new Vote(null, null, RESTAURANT_2, LocalDate.now());
+        return new Vote(null, USER, RESTAURANT_2, LocalDate.now());
     }
 
     public static Vote getNewWithEmptyMenu() {
-        return new Vote(null, null, RESTAURANT_4, LocalDate.now());
+        return new Vote(null, ADMIN, RESTAURANT_4, LocalDate.now());
     }
 
     public static Vote getUpdatedVote() {
         Vote updated = new Vote(VOTE_5);
         updated.setRestaurant(RESTAURANT_2);
         return updated;
+    }
+
+    public static Vote setUserAndRestaurantToNull(Vote vote) {
+        Vote newVote = new Vote(vote);
+        newVote.setUser(null);
+        newVote.setRestaurant(null);
+        return newVote;
     }
 }
