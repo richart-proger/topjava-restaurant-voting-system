@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.restaurant_voting_system.service.VoteService;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
-import ru.javawebinar.restaurant_voting_system.web.AbstractControllerTest;
+import ru.javawebinar.restaurant_voting_system.web.rest.AbstractControllerTest;
 
 import java.util.List;
 

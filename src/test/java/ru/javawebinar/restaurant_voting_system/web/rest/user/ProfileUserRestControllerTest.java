@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.restaurant_voting_system.service.UserService;
 import ru.javawebinar.restaurant_voting_system.to.UserTo;
-import ru.javawebinar.restaurant_voting_system.web.AbstractControllerTest;
+import ru.javawebinar.restaurant_voting_system.web.rest.AbstractControllerTest;
 import ru.javawebinar.restaurant_voting_system.web.json.JsonUtil;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

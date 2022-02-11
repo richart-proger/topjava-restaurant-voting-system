@@ -8,7 +8,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
-import ru.javawebinar.restaurant_voting_system.web.AbstractControllerTest;
+import ru.javawebinar.restaurant_voting_system.web.rest.AbstractControllerTest;
 import ru.javawebinar.restaurant_voting_system.web.json.JsonUtil;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
