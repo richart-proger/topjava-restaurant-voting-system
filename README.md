@@ -16,4 +16,5 @@
 * JSONassert
 * Jackson Databind
 * SLF4J
+* SoapUI
 * Maven 3
