@@ -9,13 +9,13 @@
        http://www.springframework.org/schema/context
        https://www.springframework.org/schema/context/spring-context.xsd
 ">
+    <bean class="ru.javawebinar.restaurant_voting_system.web.json.JacksonObjectMapper" id="objectMapper"
+          factory-method="getMapper"/>
 
     <mvc:annotation-driven>
         <mvc:message-converters>
             <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="objectMapper">
-                    <bean class="ru.javawebinar.restaurant_voting_system.web.json.JacksonObjectMapper"/>
-                </property>
+                <property name="objectMapper" ref="objectMapper"/>
             </bean>
         </mvc:message-converters>
     </mvc:annotation-driven>

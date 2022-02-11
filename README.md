@@ -11,6 +11,9 @@
 * HyperSQL Database
 * Ehcache 3
 * JUnit 5
+* Hamcrest All
 * AssertJ
+* JSONassert
+* Jackson Databind
 * SLF4J
 * Maven 3
