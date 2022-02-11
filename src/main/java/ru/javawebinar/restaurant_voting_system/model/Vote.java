@@ -1,6 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -17,11 +18,18 @@ public class Vote extends AbstractBaseEntity {
     @JsonBackReference
     private User user;
 
+    @Column(name = "user_email")
+    private String email;
+
+    @JsonIgnore
     @JoinColumn(name = "restaurant_id", nullable = false, foreignKey = @ForeignKey(name = "global_seq", foreignKeyDefinition = "START WITH 100000"))
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
 //    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
+
+    @Column(name = "restaurant_name")
+    private String restaurantName;
 
     @Column(name = "booking_date", nullable = false, columnDefinition = "date default now()")
     @NotNull
@@ -33,12 +41,16 @@ public class Vote extends AbstractBaseEntity {
 
     public Vote(Vote v) {
         this(v.id, v.user, v.restaurant, v.bookingDate);
+        this.email = user.getEmail();
+        this.restaurantName = restaurant.getName();
     }
 
     public Vote(Integer id, User user, Restaurant restaurant, LocalDate bookingDate) {
         super(id);
         this.user = user;
+        this.email = user.getEmail();
         this.restaurant = restaurant;
+        this.restaurantName = restaurant.getName();
         this.bookingDate = bookingDate;
     }
 
@@ -64,6 +76,22 @@ public class Vote extends AbstractBaseEntity {
 
     public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail() {
+        this.email = user.getEmail();
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName() {
+        this.restaurantName = restaurant.getName();
     }
 
     @Override

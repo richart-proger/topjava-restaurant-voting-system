@@ -18,6 +18,12 @@ public interface CrudDishRepository extends JpaRepository<Dish, Integer> {
     @Query("DELETE FROM Dish d WHERE d.id=?1")
     int delete(int id);
 
+    @EntityGraph(attributePaths = {"restaurant"})
+    @Transactional
+    @Modifying
+    @Query("DELETE FROM Dish d WHERE d.restaurant.id=?1 and d.date=?2")
+    int deleteMenu(int restaurantId, LocalDate date);
+
     @Query("SELECT d FROM Dish d WHERE d.restaurant.id=?1 AND d.date=?2 ORDER BY d.date DESC")
     List<Dish> getDish(int restaurantId, LocalDate date);
 

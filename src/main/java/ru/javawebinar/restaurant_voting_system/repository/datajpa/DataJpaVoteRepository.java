@@ -1,5 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.repository.datajpa;
 
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,22 +17,36 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     private final CrudVoteRepository crudVoteRepository;
     private final CrudUserRepository crudUserRepository;
+    private final CrudRestaurantRepository crudRestaurantRepository;
 
-    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository) {
+    public DataJpaVoteRepository(CrudVoteRepository crudVoteRepository, CrudUserRepository crudUserRepository, CrudRestaurantRepository crudRestaurantRepository) {
         this.crudVoteRepository = crudVoteRepository;
         this.crudUserRepository = crudUserRepository;
+        this.crudRestaurantRepository = crudRestaurantRepository;
     }
 
     @Override
+    @Transactional
     public Vote get(int id, int userId) {
+        Hibernate.initialize(crudUserRepository.getById(userId));
         return crudVoteRepository.findById(id)
                 .filter(vote -> vote.getUser().getId() == userId)
                 .orElse(null);
     }
 
     @Override
+    public Vote get(int id) {
+        return crudVoteRepository.findById(id).orElse(null);
+    }
+
+    public Vote getForToday(int userId, LocalDate date) {
+        return crudVoteRepository.getForToday(userId, date);
+    }
+
+    @Override
     @Transactional
     public Vote save(Vote vote, int userId) {
+        Hibernate.initialize(crudUserRepository.getById(userId));
         if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }

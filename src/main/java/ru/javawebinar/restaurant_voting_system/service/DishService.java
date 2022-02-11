@@ -32,8 +32,19 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
+    public List<Dish> createMenu(List<Dish> menu) {
+        Assert.notNull(menu, "Dishes list must be not null");
+        return repository.saveMenu(menu);
+    }
+
+    @CacheEvict(value = "dishes", allEntries = true)
     public void delete(int id) {
         checkNotFoundWithId(repository.delete(id), id);
+    }
+
+    @CacheEvict(value = "dishes", allEntries = true)
+    public void deleteMenu(int restaurantId, LocalDate date) {
+        checkNotFoundWithId(repository.deleteMenu(restaurantId, date), restaurantId);
     }
 
     public Dish getByRestaurantId(int id, int restaurantId) {
@@ -50,9 +61,9 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
-    public void update(Dish dish) {
+    public Dish update(Dish dish) {
         Assert.notNull(dish, "Dish must be not null");
-        checkNotFoundWithId(repository.save(dish), dish.getId());
+        return checkNotFoundWithId(repository.save(dish), dish.getId());
     }
 
     public List<Dish> getDishByDate(int restaurantId, LocalDate date) {

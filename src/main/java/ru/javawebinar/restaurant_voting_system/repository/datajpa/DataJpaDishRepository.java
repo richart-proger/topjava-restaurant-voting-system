@@ -37,8 +37,18 @@ public class DataJpaDishRepository implements DishRepository {
     }
 
     @Override
+    public List<Dish> saveMenu(List<Dish> menu) {
+        return crudDishRepository.saveAll(menu);
+    }
+
+    @Override
     public boolean delete(int id) {
         return crudDishRepository.delete(id) != 0;
+    }
+
+    @Override
+    public boolean deleteMenu(int restaurantId, LocalDate date) {
+        return crudDishRepository.deleteMenu(restaurantId, date) != 0;
     }
 
     @Override

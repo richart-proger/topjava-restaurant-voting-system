@@ -10,8 +10,14 @@ public interface DishRepository {
     // null if not found, when updated
     Dish save(Dish dish);
 
+    // null if not found, when updated
+    List<Dish> saveMenu(List<Dish> menu);
+
     // false if not found
     boolean delete(int id);
+
+    // false if not found
+    boolean deleteMenu(int restaurantId, LocalDate date);
 
     // null if dish do not belong to restaurantId
     Dish getByRestaurantId(int id, int restaurantId);

@@ -43,8 +43,20 @@ public class VoteService {
         return checkNotFoundWithId(voteRepository.get(id, userId), id);
     }
 
+    public Vote get(int id) {
+        return checkNotFoundWithId(voteRepository.get(id), id);
+    }
+
+    public Vote getForToday(int authUserId) {
+        return voteRepository.getForToday(authUserId, LocalDate.now());
+    }
+
     public List<Vote> getAll() {
         return voteRepository.getAll();
+    }
+
+    public List<Vote> getAllWithAuthUser(int authUserId) {
+        return voteRepository.getAllByUserId(authUserId);
     }
 
     public List<Vote> getAllByUserId(int userId) {
@@ -55,12 +67,12 @@ public class VoteService {
         return voteRepository.getBetweenPeriod(atStartOfDayOrMin(startDate), atStartOfNextDayOrMax(endDate), userId);
     }
 
-    public void update(Vote vote, int userId, LocalTime currentTime) {
+    public Vote update(Vote vote, int userId, LocalTime currentTime) {
         Assert.notNull(vote, "Vote must be not null");
         Assert.notNull(currentTime, "LocalTime must be not null");
         checkSameDate(vote.getBookingDate(), get(vote.getId(), userId).getBookingDate());
         checkIfTimeHasExpired(currentTime);
-        checkNotFoundWithId(voteRepository.save(vote, userId), vote.getId());
+        return checkNotFoundWithId(voteRepository.save(vote, userId), vote.getId());
     }
 
     public Vote getWithUser(int id, int userId) {

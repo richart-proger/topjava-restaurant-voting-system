@@ -42,9 +42,9 @@ public class RestaurantService {
     }
 
     @CacheEvict(value = "restaurants", allEntries = true)
-    public void update(Restaurant restaurant) {
+    public Restaurant update(Restaurant restaurant) {
         Assert.notNull(restaurant, "Restaurant must be not null");
-        checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
+        return checkNotFoundWithId(repository.save(restaurant), restaurant.getId());
     }
 
     public Restaurant getWithDishes(int id) {

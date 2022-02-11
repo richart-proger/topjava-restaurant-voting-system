@@ -2,12 +2,9 @@ package ru.javawebinar.restaurant_voting_system.model;
 
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.springframework.util.CollectionUtils;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 @Entity
@@ -17,14 +14,14 @@ public class Restaurant extends AbstractNamedEntity {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("date desc")
-    private Set<Dish> restaurantMenu = new HashSet<>();
+    private List<Dish> restaurantMenu;
 
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @OrderBy("bookingDate DESC")
     private List<Vote> votes;
 
-    public Restaurant(Set<Dish> menu) {
+    public Restaurant(List<Dish> menu) {
         this.restaurantMenu = menu;
     }
 
@@ -36,7 +33,7 @@ public class Restaurant extends AbstractNamedEntity {
         super(id, name);
     }
 
-    public Restaurant(Integer id, String name, Set<Dish> menu) {
+    public Restaurant(Integer id, String name, List<Dish> menu) {
         super(id, name);
         setMenu(menu);
     }
@@ -45,12 +42,12 @@ public class Restaurant extends AbstractNamedEntity {
         this(r.id, r.name, r.restaurantMenu);
     }
 
-    public Set<Dish> getMenu() {
+    public List<Dish> getMenu() {
         return restaurantMenu;
     }
 
-    public void setMenu(Set<Dish> menu) {
-        this.restaurantMenu = CollectionUtils.isEmpty(menu) ? null : Set.copyOf(menu);
+    public void setMenu(List<Dish> menu) {
+        this.restaurantMenu = menu;
     }
 
     public List<Vote> getVotes() {
@@ -66,7 +63,6 @@ public class Restaurant extends AbstractNamedEntity {
         final StringBuffer sb = new StringBuffer("Restaurant{");
         sb.append("id=").append(id);
         sb.append(", name='").append(name).append('\'');
-        sb.append(", restaurantMenu=").append(restaurantMenu);
         sb.append('}');
         return sb.toString();
     }

@@ -1,5 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.validator.constraints.Range;
@@ -22,18 +24,29 @@ public class Dish extends AbstractNamedEntity {
     @NotNull
     private LocalDate date;
 
+    @JsonIgnore
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @BatchSize(size = 200)
 //    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
+
+    @Column(name = "restaurant_name")
+    private String restaurantName;
 
     public Dish() {
 
     }
 
+    public Dish(Integer id, String name, Integer price) {
+        super(id, name);
+        this.price = price;
+    }
+
     public Dish(Dish d) {
         this(d.id, d.name, d.price, d.date, d.restaurant);
+        this.restaurantName = restaurant.getName();
     }
 
     public Dish(Integer id, String name, Integer price, LocalDate date, Restaurant restaurant) {
@@ -41,6 +54,7 @@ public class Dish extends AbstractNamedEntity {
         this.price = price;
         this.date = date;
         this.restaurant = restaurant;
+        this.restaurantName = restaurant.getName();
     }
 
     public Integer getPrice() {
@@ -65,6 +79,14 @@ public class Dish extends AbstractNamedEntity {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName() {
+        this.restaurantName = restaurant.getName();
     }
 
     @Override
