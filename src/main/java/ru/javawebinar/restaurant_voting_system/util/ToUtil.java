@@ -147,6 +147,7 @@ public class ToUtil {
     public static void setRestaurantAndDateInMenu(List<Dish> menu, Restaurant restaurant) {
         menu.forEach(dish -> {
             dish.setRestaurant(restaurant);
+            dish.setRestaurantName();
             dish.setDate(LocalDate.now());
         });
     }

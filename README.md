@@ -7,6 +7,7 @@
 * Spring 5
 * Spring DATA JPA
 * Spring MVC
+* Spring Security
 * Hibernate
 * HyperSQL Database
 * Ehcache 3

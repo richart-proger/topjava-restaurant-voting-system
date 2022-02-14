@@ -22,6 +22,7 @@
 
     <logger name="ru.javawebinar.restaurant_voting_system" level="debug"/>
     <logger name="org.springframework.web.servlet" level="debug"/>
+    <logger name="org.springframework.security" level="debug"/>
 
     <root level="info">
         <appender-ref ref="file"/>

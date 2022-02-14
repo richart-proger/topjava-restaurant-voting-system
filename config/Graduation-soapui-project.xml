@@ -62,13 +62,17 @@
                                     http://localhost/restaurant_voting_system/rest/admin/restaurants/100002/with-menu
                                 </con:originalUri>
                                 <con:credentials>
-                                    <con:authType>No Authorization</con:authType>
+                                    <con:username>admin@gmail.com</con:username>
+                                    <con:password>admin</con:password>
+                                    <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                    <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                    <con:authType>Global HTTP Settings</con:authType>
                                 </con:credentials>
                                 <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                                 <con:jmsPropertyConfig/>
                                 <con:parameters>
-                                    <con:entry key="endDate" value="2022-02-09"/>
-                                    <con:entry key="startDate" value="2022-02-02"/>
+                                    <con:entry key="endDate" value="2022-02-15"/>
+                                    <con:entry key="startDate" value="2022-02-11"/>
                                 </con:parameters>
                                 <con:parameterOrder>
                                     <con:entry>startDate</con:entry>
@@ -94,6 +98,12 @@
                                 with:Response
                             </con:element>
                         </con:representation>
+                        <con:representation type="FAULT">
+                            <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                            <con:status>500</con:status>
+                            <con:params/>
+                            <con:element>html</con:element>
+                        </con:representation>
                         <con:request name="Request 1" id="7f0dd327-3480-4717-8d0d-9e081add1eae"
                                      mediaType="application/json">
                             <con:settings>
@@ -103,7 +113,11 @@
                             <con:request/>
                             <con:originalUri>http://http/rest/admin/restaurants/100002/with-menu</con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>admin@gmail.com</con:username>
+                                <con:password>admin</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
@@ -132,6 +146,12 @@
                         <con:params/>
                         <con:element xmlns:ns="http://http/rest/admin/restaurants/100002">ns:Response</con:element>
                     </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>401</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="79d7aea6-5e7c-4aee-bd52-2520117fe500"
                                  mediaType="application/json">
                         <con:settings>
@@ -141,7 +161,11 @@
                         <con:request/>
                         <con:originalUri>http://http/rest/admin/restaurants/100002</con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -173,6 +197,30 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>401</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="5f4a7ec6-12b3-4fed-8886-0c6112f369f9" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -183,7 +231,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/restaurants/100002
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -246,7 +298,11 @@
                                 http://localhost/restaurant_voting_system/rest/admin/restaurants/100005/menu
                             </con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>admin@gmail.com</con:username>
+                                <con:password>admin</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
@@ -296,6 +352,24 @@
                             <con:params/>
                             <con:element>data</con:element>
                         </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
                         <con:request name="Request 1" id="4055cc92-7bd9-4a8e-90d5-88fce7336583"
                                      mediaType="application/json" postQueryString="false">
                             <con:settings>
@@ -307,7 +381,11 @@
                                 http://localhost/restaurant_voting_system/rest/admin/restaurants/100005/menu
                             </con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>admin@gmail.com</con:username>
+                                <con:password>admin</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
@@ -368,7 +446,11 @@
                                 http://localhost/restaurant_voting_system/rest/admin/restaurants/100005/menu
                             </con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>admin@gmail.com</con:username>
+                                <con:password>admin</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
@@ -419,6 +501,12 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="551205da-57b4-4039-8173-d890df6287e4" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -429,7 +517,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/restaurants/100005
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -477,7 +569,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/restaurants/100005
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -521,6 +617,12 @@
                             <con:params/>
                             <con:element xmlns:men="http://http/rest/admin/restaurants/menus">men:Response</con:element>
                         </con:representation>
+                        <con:representation type="FAULT">
+                            <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                            <con:status>401</con:status>
+                            <con:params/>
+                            <con:element>html</con:element>
+                        </con:representation>
                         <con:request name="Request 1" id="32c4fc3d-1286-492e-8ffa-20d4607d8495"
                                      mediaType="application/json">
                             <con:settings>
@@ -530,13 +632,17 @@
                             <con:request/>
                             <con:originalUri>http://http/rest/admin/restaurants/menus</con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>admin@gmail.com</con:username>
+                                <con:password>admin</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
                             <con:parameters>
-                                <con:entry key="endDate" value="2022-02-07"/>
-                                <con:entry key="startDate" value="2022-02-07"/>
+                                <con:entry key="endDate" value="2022-02-14"/>
+                                <con:entry key="startDate" value="2022-02-13"/>
                             </con:parameters>
                             <con:parameterOrder>
                                 <con:entry>startDate</con:entry>
@@ -560,6 +666,12 @@
                         <con:params/>
                         <con:element xmlns:men="http://http/rest/admin/restaurants/menus">men:Response</con:element>
                     </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>401 500</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="790ceaf1-1566-4e9d-9701-06e5cbf10a3b"
                                  mediaType="application/json">
                         <con:settings>
@@ -569,7 +681,11 @@
                         <con:request/>
                         <con:originalUri>http://http/rest/admin/restaurants/menus</con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -582,7 +698,7 @@
                 <con:parameters/>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>404 415 400 500</con:status>
+                    <con:status>404 415 400 500 401</con:status>
                     <con:params/>
                     <con:element>html</con:element>
                 </con:representation>
@@ -620,7 +736,11 @@
                     <con:originalUri>http://localhost/restaurant_voting_system/restaurants/rest/admin/restaurants
                     </con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -637,6 +757,12 @@
                     <con:params/>
                     <con:element>Response</con:element>
                 </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                    <con:status>401</con:status>
+                    <con:params/>
+                    <con:element>html</con:element>
+                </con:representation>
                 <con:request name="Request 1" id="f07cb599-a2ef-4800-a8e6-21861e353658" mediaType="application/json">
                     <con:settings>
                         <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
@@ -646,7 +772,11 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/restaurants</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -705,13 +835,17 @@
                                     http://localhost/restaurant_voting_system/rest/profile/restaurants/100003/with-menu
                                 </con:originalUri>
                                 <con:credentials>
-                                    <con:authType>No Authorization</con:authType>
+                                    <con:username>user@yandex.ru</con:username>
+                                    <con:password>password</con:password>
+                                    <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                    <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                    <con:authType>Global HTTP Settings</con:authType>
                                 </con:credentials>
                                 <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                                 <con:jmsPropertyConfig/>
                                 <con:parameters>
-                                    <con:entry key="endDate" value="2022-02-09"/>
-                                    <con:entry key="startDate" value="2022-02-02"/>
+                                    <con:entry key="endDate" value="2022-02-15"/>
+                                    <con:entry key="startDate" value="2022-02-11"/>
                                 </con:parameters>
                                 <con:parameterOrder>
                                     <con:entry>startDate</con:entry>
@@ -743,7 +877,11 @@
                                 http://localhost/restaurant_voting_system/rest/profile/restaurants/100003/with-menu
                             </con:originalUri>
                             <con:credentials>
-                                <con:authType>No Authorization</con:authType>
+                                <con:username>user@yandex.ru</con:username>
+                                <con:password>password</con:password>
+                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                                <con:authType>Global HTTP Settings</con:authType>
                             </con:credentials>
                             <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                             <con:jmsPropertyConfig/>
@@ -763,6 +901,12 @@
                             ns:Response
                         </con:element>
                     </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>401</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="7b19c179-e448-484f-b76e-64495fa92676"
                                  mediaType="application/json">
                         <con:settings>
@@ -773,7 +917,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/restaurants/100003
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>user@yandex.ru</con:username>
+                            <con:password>password</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -785,7 +933,7 @@
                     <con:parameters/>
                     <con:representation type="FAULT">
                         <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>500</con:status>
+                        <con:status>500 401</con:status>
                         <con:params/>
                         <con:element>html</con:element>
                     </con:representation>
@@ -818,7 +966,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/restaurants/100003
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>user@yandex.ru</con:username>
+                            <con:password>password</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -831,7 +983,7 @@
                 <con:parameters/>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>404</con:status>
+                    <con:status>404 401</con:status>
                     <con:params/>
                     <con:element>html</con:element>
                 </con:representation>
@@ -851,7 +1003,11 @@
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/restaurants
                     </con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>user@yandex.ru</con:username>
+                        <con:password>password</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -886,7 +1042,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/dishes/100024
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -912,6 +1072,18 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="599c26f7-5bb9-4356-9168-244661091cb7" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -921,7 +1093,11 @@
                         <con:request/>
                         <con:originalUri>http://http/rest/admin/dishes/100024</con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -943,7 +1119,7 @@
                     </con:representation>
                     <con:representation type="FAULT">
                         <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>500 400</con:status>
+                        <con:status>500 400 401</con:status>
                         <con:params/>
                         <con:element>html</con:element>
                     </con:representation>
@@ -973,7 +1149,11 @@
                         </con:request>
                         <con:originalUri>http://http/rest/admin/dishes/100010</con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -1016,7 +1196,11 @@
                             http://localhost/restaurant_voting_system/rest/admin/dishes/restaurants/100002
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -1042,48 +1226,18 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/dishes</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
                     <con:parameters/>
                 </con:request>
             </con:method>
-            <con:method name="Create dish" id="43677ffe-8417-40b7-a485-f0a40ee8decd" method="POST">
-                <con:settings/>
-                <con:parameters/>
-                <con:representation type="FAULT">
-                    <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>500</con:status>
-                    <con:params/>
-                    <con:element>html</con:element>
-                </con:representation>
-                <con:representation type="REQUEST">
-                    <con:mediaType>application/json</con:mediaType>
-                    <con:params/>
-                </con:representation>
-                <con:request name="Request 1" id="fe3f7c1e-4714-4bba-812f-1d85dc0b257c" mediaType="application/json"
-                             postQueryString="false">
-                    <con:settings>
-                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
-                        </con:setting>
-                    </con:settings>
-                    <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
-                    <con:request>{
-                        "id": null,
-                        "name": "New food",
-                        "price": 888
-                        }
-                    </con:request>
-                    <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/dishes</con:originalUri>
-                    <con:credentials>
-                        <con:authType>No Authorization</con:authType>
-                    </con:credentials>
-                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
-                    <con:jmsPropertyConfig/>
-                    <con:parameters/>
-                </con:request>
-            </con:method>
+
         </con:resource>
         <con:resource name="Admin/votes" path="/rest/admin/votes" id="50e12e98-e5a3-47d7-9a49-df759a72f269">
             <con:settings/>
@@ -1112,7 +1266,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/votes/100028
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -1150,7 +1308,11 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/votes</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -1191,53 +1353,18 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/votes/100030
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>user@yandex.ru</con:username>
+                            <con:password>password</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
                         <con:parameters/>
                     </con:request>
                 </con:method>
-                <con:method name="Update vote" id="69804ef7-a90a-48e8-aa9f-478fb7e95a72" method="PUT">
-                    <con:settings/>
-                    <con:parameters/>
-                    <con:representation type="RESPONSE">
-                        <con:mediaType xsi:nil="true"/>
-                        <con:status>0</con:status>
-                        <con:params/>
-                        <con:element>data</con:element>
-                    </con:representation>
-                    <con:representation type="REQUEST">
-                        <con:mediaType>application/json</con:mediaType>
-                        <con:params/>
-                    </con:representation>
-                    <con:representation type="FAULT">
-                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>405</con:status>
-                        <con:params/>
-                        <con:element>html</con:element>
-                    </con:representation>
-                    <con:request name="Request 1" id="4a0b33b3-6200-4965-90d4-8e5da216fcc9" mediaType="application/json"
-                                 postQueryString="false">
-                        <con:settings>
-                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
-                        </con:settings>
-                        <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
-                        <con:request>{
-                            "id": null,
-                            "restaurantId": null,
-                            "restaurantName": null,
-                            "voteBookingDate": "2022-02-10"
-                        </con:request>
-                        <con:originalUri>http://http/rest/profile/votes/100030</con:originalUri>
-                        <con:credentials>
-                            <con:authType>No Authorization</con:authType>
-                        </con:credentials>
-                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
-                        <con:jmsPropertyConfig/>
-                        <con:parameters/>
-                    </con:request>
-                </con:method>
+
                 <con:method name="Delete vote" id="42714b5c-f09b-482b-ba3b-569bc8c939a4" method="DELETE">
                     <con:settings/>
                     <con:parameters/>
@@ -1269,6 +1396,18 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="b6e107a3-2c0c-454f-a2e8-d76e1383f932" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -1279,7 +1418,11 @@
                         <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/votes/100030
                         </con:originalUri>
                         <con:credentials>
-                            <con:authType>No Authorization</con:authType>
+                            <con:username>user@yandex.ru</con:username>
+                            <con:password>password</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
                         </con:credentials>
                         <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                         <con:jmsPropertyConfig/>
@@ -1311,7 +1454,11 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/profile/votes</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>user@yandex.ru</con:username>
+                        <con:password>password</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -1338,9 +1485,15 @@
                 </con:representation>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>500</con:status>
+                    <con:status>500 401</con:status>
                     <con:params/>
                     <con:element>html</con:element>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType xsi:nil="true"/>
+                    <con:status>204</con:status>
+                    <con:params/>
+                    <con:element>data</con:element>
                 </con:representation>
                 <con:representation type="RESPONSE">
                     <con:mediaType xsi:nil="true"/>
@@ -1376,7 +1529,11 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/profile</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>user@yandex.ru</con:username>
+                        <con:password>password</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
@@ -1396,6 +1553,12 @@
                     <con:params/>
                     <con:element>Response</con:element>
                 </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                    <con:status>401</con:status>
+                    <con:params/>
+                    <con:element>html</con:element>
+                </con:representation>
                 <con:request name="Request 1" id="064ec21a-9dd6-41d3-b447-7b5a531798d3" mediaType="application/json">
                     <con:settings>
                         <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
@@ -1405,7 +1568,11 @@
                     <con:request/>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/users</con:originalUri>
                     <con:credentials>
-                        <con:authType>No Authorization</con:authType>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
                     </con:credentials>
                     <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
                     <con:jmsPropertyConfig/>
