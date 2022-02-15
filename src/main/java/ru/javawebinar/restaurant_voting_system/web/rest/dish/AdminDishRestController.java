@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
@@ -12,12 +13,14 @@ import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
 import ru.javawebinar.restaurant_voting_system.to.DishTo;
 import ru.javawebinar.restaurant_voting_system.util.exception.ForbiddenException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
 import static org.slf4j.LoggerFactory.getLogger;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.*;
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.assureIdConsistent;
+import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
 
 @RestController
 @RequestMapping(value = AdminDishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -48,8 +51,10 @@ public class AdminDishRestController {
     }
 
     @PostMapping(value = "/restaurants/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishTo> createDishWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody DishTo dishTo) {
+    public ResponseEntity<DishTo> createDishWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid DishTo dishTo, BindingResult result) {
         log.info("createWithLocation for restaurant with id={} and dish={}", restaurantId, dishTo);
+        validateBindingResult(result);
+
         Dish newDish = getDishFromDishTo(dishTo);
         setRestaurantAndDateInMenu(List.of(newDish), restaurantService.get(restaurantId));
         Dish created = dishService.create(newDish);
@@ -71,8 +76,10 @@ public class AdminDishRestController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishTo> updateWithLocation(@RequestBody DishTo dishTo, @PathVariable int id) {
+    public ResponseEntity<DishTo> updateWithLocation(@RequestBody @Valid DishTo dishTo, @PathVariable int id, BindingResult result) {
         log.info("update dish {} with id={}", dishTo, id);
+        validateBindingResult(result);
+
         if (dishService.get(id) == null) {
             throw new ForbiddenException("There is nothing to update");
         }

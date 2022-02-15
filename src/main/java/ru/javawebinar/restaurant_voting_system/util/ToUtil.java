@@ -1,9 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.util;
 
-import ru.javawebinar.restaurant_voting_system.model.Dish;
-import ru.javawebinar.restaurant_voting_system.model.Restaurant;
-import ru.javawebinar.restaurant_voting_system.model.User;
-import ru.javawebinar.restaurant_voting_system.model.Vote;
+import ru.javawebinar.restaurant_voting_system.model.*;
 import ru.javawebinar.restaurant_voting_system.to.*;
 
 import java.time.LocalDate;
@@ -23,11 +20,18 @@ public class ToUtil {
     }
 
     public static UserTo getUserTo(User user) {
-        return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword(), user.isEnabled(), user.getRegistered(), user.getRoles());
+        return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
 
-    public static User getUserFromUserTo(UserTo userTo) {
-        return new User(userTo.getId(), userTo.getName(), userTo.getEmail(), userTo.getPassword(), userTo.isEnabled(), userTo.getRegistered(), userTo.getRoles());
+    public static User createNewFromTo(UserTo userTo) {
+        return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);
+    }
+
+    public static User updateFromTo(User user, UserTo userTo) {
+        user.setName(userTo.getName());
+        user.setEmail(userTo.getEmail().toLowerCase());
+        user.setPassword(userTo.getPassword());
+        return user;
     }
 
     /**
@@ -40,7 +44,7 @@ public class ToUtil {
     }
 
     public static VoteTo getVoteTo(Vote vote) {
-        return new VoteTo(vote.getId(), vote.getUser().getId(), vote.getRestaurant().getId(), vote.getRestaurantName(), vote.getBookingDate());
+        return new VoteTo(vote.getId(), vote.getRestaurant().getId(), vote.getRestaurantName(), vote.getBookingDate());
     }
 
     /**
@@ -74,7 +78,7 @@ public class ToUtil {
     }
 
     public static Restaurant getRestaurantFromRestaurantTo(RestaurantTo restaurantTo) {
-        return new Restaurant(restaurantTo.getRestaurantId(), restaurantTo.getRestaurantName());
+        return new Restaurant(restaurantTo.getId(), restaurantTo.getRestaurantName());
     }
 
     /**
@@ -141,7 +145,7 @@ public class ToUtil {
     }
 
     public static Dish getDishFromDishTo(DishTo dishTo) {
-        return new Dish(dishTo.getDishId(), dishTo.getDishName(), dishTo.getPrice());
+        return new Dish(dishTo.getId(), dishTo.getDishName(), dishTo.getPrice());
     }
 
     public static void setRestaurantAndDateInMenu(List<Dish> menu, Restaurant restaurant) {

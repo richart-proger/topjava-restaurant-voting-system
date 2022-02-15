@@ -1,12 +1,13 @@
 package ru.javawebinar.restaurant_voting_system.model;
 
 import org.hibernate.Hibernate;
+import ru.javawebinar.restaurant_voting_system.HasId;
 
 import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity {
+public abstract class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 100000;
 
     @Id
@@ -23,10 +24,12 @@ public abstract class AbstractBaseEntity {
         this.id = id;
     }
 
+    @Override
     public void setId(Integer id) {
         this.id = id;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }
@@ -34,10 +37,6 @@ public abstract class AbstractBaseEntity {
     @Override
     public String toString() {
         return getClass().getSimpleName() + ":" + id;
-    }
-
-    public boolean isNew() {
-        return this.id == null;
     }
 
     @Override

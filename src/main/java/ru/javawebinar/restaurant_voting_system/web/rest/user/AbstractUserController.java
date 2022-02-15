@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.service.UserService;
 import ru.javawebinar.restaurant_voting_system.to.UserTo;
+import ru.javawebinar.restaurant_voting_system.util.ToUtil;
 
 import java.util.List;
 
-import static ru.javawebinar.restaurant_voting_system.util.ToUtil.*;
+import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getUserTo;
+import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getUserTos;
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.assureIdConsistent;
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.checkNew;
 
@@ -30,10 +32,10 @@ public abstract class AbstractUserController {
         return getUserTo(service.get(id));
     }
 
-    public User create(User user) {
-        log.info("create user {}", user);
-        checkNew(user);
-        return service.create(user);
+    public User create(UserTo userTo) {
+        log.info("create user {}", userTo);
+        checkNew(userTo);
+        return service.create(ToUtil.createNewFromTo(userTo));
     }
 
     public void delete(int id) {
@@ -43,9 +45,8 @@ public abstract class AbstractUserController {
 
     public void update(UserTo userTo, int id) {
         log.info("update user {} with id={}", userTo, id);
-        User user = getUserFromUserTo(userTo);
-        assureIdConsistent(user, id);
-        service.update(user);
+        assureIdConsistent(userTo, id);
+        service.update(userTo);
     }
 
     public UserTo getByMail(String email) {

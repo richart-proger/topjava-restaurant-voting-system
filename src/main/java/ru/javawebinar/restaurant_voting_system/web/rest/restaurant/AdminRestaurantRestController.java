@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
@@ -14,12 +15,14 @@ import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
 import ru.javawebinar.restaurant_voting_system.util.exception.ForbiddenException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.*;
+import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
 
 @RestController
 @RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,8 +55,10 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody RestaurantTo restaurantTo) {
+    public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, BindingResult result) {
         log.info("createWithLocation restaurant {}", restaurantTo);
+        validateBindingResult(result);
+
         Restaurant newRestaurant = getRestaurantFromRestaurantTo(restaurantTo);
         Restaurant created = super.create(newRestaurant);
 
@@ -71,8 +76,9 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantTo> updateWithLocation(@RequestBody RestaurantTo restaurantTo, @PathVariable int id) {
+    public ResponseEntity<RestaurantTo> updateWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, @PathVariable int id, BindingResult result) {
         log.info("updateWithLocation restaurant {}", restaurantTo);
+        validateBindingResult(result);
         return ResponseEntity.ok(super.update(restaurantTo, id));
     }
 
@@ -100,8 +106,9 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
     }
 
     @PostMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<LocalDate, List<MenuTo>>> createMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody MenuTo menuTo) {
+    public ResponseEntity<Map<LocalDate, List<MenuTo>>> createMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
         log.info("createMenuWithLocation for restaurant with id={} and menu={}", restaurantId, menuTo);
+        validateBindingResult(result);
 
         if (dishService.getDishByDate(restaurantId, LocalDate.now()).isEmpty()) {
             Restaurant restaurant = restaurantService.get(restaurantId);
@@ -126,8 +133,9 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
     }
 
     @PutMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<LocalDate, List<MenuTo>>> updateMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody MenuTo menuTo) {
+    public ResponseEntity<Map<LocalDate, List<MenuTo>>> updateMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
         log.info("updateMenuWithLocation for restaurant with id={} and menu={}", restaurantId, menuTo);
+        validateBindingResult(result);
 
         if (dishService.getDishByDate(restaurantId, LocalDate.now()).isEmpty()) {
             throw new ForbiddenException("There is nothing to update, there is no menu for today");

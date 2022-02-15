@@ -1,69 +1,37 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 
-public class VoteTo {
+public class VoteTo extends BaseTo {
 
-    private Integer id;
+    private final Integer restaurantId;
 
-    private Integer userId;
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private final String restaurantName;
 
-    private Integer restaurantId;
+    private final LocalDate bookingDate;
 
-    private String restaurantName;
-
-    private LocalDate bookingDate;
-
-    public VoteTo() {
-    }
-
-    @ConstructorProperties({"id", "userId", "restaurantId", "restaurantName", "bookingDate"})
-    public VoteTo(Integer id, Integer userId, Integer restaurantId, String restaurantName, LocalDate bookingDate) {
-        this.id = id;
-        this.userId = userId;
+    @ConstructorProperties({"id", "restaurantId", "restaurantName", "bookingDate"})
+    public VoteTo(Integer id, Integer restaurantId, String restaurantName, LocalDate bookingDate) {
+        super(id);
         this.restaurantId = restaurantId;
         this.restaurantName = restaurantName;
         this.bookingDate = bookingDate;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getRestaurantName() {
         return restaurantName;
     }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
     public Integer getRestaurantId() {
         return restaurantId;
     }
 
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
-    }
-
     public LocalDate getBookingDate() {
         return bookingDate;
-    }
-
-    public void setBookingDate(LocalDate bookingDate) {
-        this.bookingDate = bookingDate;
     }
 }

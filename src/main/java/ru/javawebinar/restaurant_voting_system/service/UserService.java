@@ -4,9 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.repository.UserRepository;
+import ru.javawebinar.restaurant_voting_system.to.UserTo;
+import ru.javawebinar.restaurant_voting_system.util.ToUtil;
 
 import java.util.List;
 
@@ -49,9 +52,18 @@ public class UserService {
     }
 
     @CacheEvict(value = "users", allEntries = true)
+    @Transactional
+    public void update(UserTo userTo) {
+        Assert.notNull(userTo, "User must be not null");
+        User user = get(userTo.id());
+        User updatedUser = ToUtil.updateFromTo(user, userTo);
+        checkNotFoundWithId(repository.save(updatedUser), updatedUser.getId());
+    }
+
+    @CacheEvict(value = "users", allEntries = true)
     public void update(User user) {
-        Assert.notNull(user, "User must be not null");
-        checkNotFoundWithId(repository.save(user), user.getId());
+        Assert.notNull(user, "User must not be null");
+        repository.save(user);
     }
 
     public User getWithVotes(int id) {

@@ -1,59 +1,40 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
 import java.time.LocalDate;
 import java.util.List;
 
-public class MenuTo {
+public class MenuTo extends BaseTo {
 
-    private Integer restaurantId;
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private final String restaurantName;
 
-    private String restaurantName;
+    private final LocalDate menuDate;
 
-    private LocalDate menuDate;
-
-    private List<DishTo> menu;
-
-    public MenuTo() {
-    }
+    @NotNull
+    private final List<DishTo> menu;
 
     @ConstructorProperties({"id", "name", "restaurantName", "date"})
     public MenuTo(Integer id, String name, List<DishTo> restaurantName, LocalDate date) {
-        this.restaurantId = id;
+        super(id);
         this.restaurantName = name;
         this.menu = restaurantName;
         this.menuDate = date;
-    }
-
-    public Integer getRestaurantId() {
-        return restaurantId;
-    }
-
-    public void setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
     }
 
     public String getRestaurantName() {
         return restaurantName;
     }
 
-    public void setRestaurantName(String restaurantName) {
-        this.restaurantName = restaurantName;
-    }
-
     public List<DishTo> getMenu() {
         return menu;
     }
 
-    public void setMenu(List<DishTo> menu) {
-        this.menu = menu;
-    }
-
     public LocalDate getMenuDate() {
         return menuDate;
-    }
-
-    public void setMenuDate(LocalDate menuDate) {
-        this.menuDate = menuDate;
     }
 }

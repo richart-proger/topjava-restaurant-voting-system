@@ -221,6 +221,12 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="5f4a7ec6-12b3-4fed-8886-0c6112f369f9" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -321,6 +327,18 @@
                         <con:representation type="REQUEST">
                             <con:mediaType>application/json</con:mediaType>
                             <con:params/>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
                         </con:representation>
                         <con:representation type="RESPONSE">
                             <con:mediaType xsi:nil="true"/>
@@ -507,6 +525,18 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="551205da-57b4-4039-8173-d890df6287e4" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -554,6 +584,12 @@
                         <con:element xmlns:ns="http://localhost/restaurant_voting_system/rest/admin/restaurants/100005">
                             ns:Response
                         </con:element>
+                    </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>400</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
                     </con:representation>
                     <con:request name="Request 1" id="dc69ecca-4ad3-4809-b0cb-07ca10bdaf4b" mediaType="application/json"
                                  postQueryString="false">
@@ -1084,6 +1120,12 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="599c26f7-5bb9-4356-9168-244661091cb7" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -1179,6 +1221,12 @@
                                 xmlns:ns="http://localhost/restaurant_voting_system/rest/admin/dishes/restaurants/100002">
                             ns:Response
                         </con:element>
+                    </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>500</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
                     </con:representation>
                     <con:request name="Request 1" id="1ce8ea14-dd84-4528-be20-3344f9609fdf" mediaType="application/json"
                                  postQueryString="false">
@@ -1380,9 +1428,15 @@
                     </con:representation>
                     <con:representation type="FAULT">
                         <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>500</con:status>
+                        <con:status>500 404</con:status>
                         <con:params/>
                         <con:element>html</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
                     </con:representation>
                     <con:representation type="RESPONSE">
                         <con:mediaType xsi:nil="true"/>
@@ -1544,6 +1598,112 @@
         <con:resource name="Admin/users" path="/rest/admin/users" id="da09601e-4f93-424f-b4cb-5a14592481c2">
             <con:settings/>
             <con:parameters/>
+            <con:resource name="100031" path="100031" id="c44335b7-d0ee-467a-b7c7-3cd2a1b793ca">
+                <con:settings/>
+                <con:parameters/>
+                <con:method name="Delete user" id="91e6c51f-7efc-412e-9feb-95ccb24fcbdd" method="DELETE">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>401</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
+                    <con:representation type="REQUEST">
+                        <con:mediaType>application/json</con:mediaType>
+                        <con:params/>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:request name="Request 1" id="a97c92a6-d298-49c0-8e37-0d241ad16851" mediaType="application/json"
+                                 postQueryString="false">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
+                        <con:request/>
+                        <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/users/100031
+                        </con:originalUri>
+                        <con:credentials>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters/>
+                    </con:request>
+                </con:method>
+                <con:method name="Update user" id="100558f9-428f-4121-8199-1f7fcb07f60d" method="PUT">
+                    <con:settings/>
+                    <con:parameters/>
+                    <con:representation type="REQUEST">
+                        <con:mediaType>application/json</con:mediaType>
+                        <con:params/>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>0</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:request name="Request 1" id="fe88b1f0-58e8-4f8d-b786-643993c3ef52" mediaType="application/json"
+                                 postQueryString="false">
+                        <con:settings>
+                            <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
+                        </con:settings>
+                        <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
+                        <con:request>{
+                            "name": "AmigoZZZ",
+                            "email": "user000@yaSCHER.ru",
+                            "password": "567amigo"
+                            }
+                        </con:request>
+                        <con:originalUri>http://http/rest/admin/users/100031</con:originalUri>
+                        <con:credentials>
+                            <con:username>admin@gmail.com</con:username>
+                            <con:password>admin</con:password>
+                            <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                            <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                            <con:authType>Global HTTP Settings</con:authType>
+                        </con:credentials>
+                        <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                        <con:jmsPropertyConfig/>
+                        <con:parameters/>
+                    </con:request>
+                </con:method>
+            </con:resource>
             <con:method name="GetAll users" id="86716410-445b-40eb-9c4e-ac7d001ffdf6" method="GET">
                 <con:settings/>
                 <con:parameters/>
@@ -1566,6 +1726,75 @@
                     </con:settings>
                     <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                     <con:request/>
+                    <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/users</con:originalUri>
+                    <con:credentials>
+                        <con:username>admin@gmail.com</con:username>
+                        <con:password>admin</con:password>
+                        <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
+                        <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
+                        <con:authType>Global HTTP Settings</con:authType>
+                    </con:credentials>
+                    <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
+                    <con:jmsPropertyConfig/>
+                    <con:parameters/>
+                </con:request>
+            </con:method>
+            <con:method name="Create or update user (put id)" id="d4c7e7c3-23ef-4c0a-9a0f-6ee25d2b2654" method="POST">
+                <con:settings/>
+                <con:parameters/>
+                <con:representation type="REQUEST">
+                    <con:mediaType>application/json</con:mediaType>
+                    <con:params/>
+                </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                    <con:status>401 500</con:status>
+                    <con:params/>
+                    <con:element>html</con:element>
+                </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>application/json</con:mediaType>
+                    <con:status>422</con:status>
+                    <con:params/>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType xsi:nil="true"/>
+                    <con:status>0</con:status>
+                    <con:params/>
+                    <con:element>data</con:element>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType xsi:nil="true"/>
+                    <con:status>200</con:status>
+                    <con:params/>
+                    <con:element>data</con:element>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType xsi:nil="true"/>
+                    <con:status>200</con:status>
+                    <con:params/>
+                    <con:element>data</con:element>
+                </con:representation>
+                <con:representation type="RESPONSE">
+                    <con:mediaType>application/json</con:mediaType>
+                    <con:status>201</con:status>
+                    <con:params/>
+                    <con:element xmlns:user="http://localhost/restaurant_voting_system/rest/admin/users">user:Response
+                    </con:element>
+                </con:representation>
+                <con:request name="Request 1" id="8810492d-744f-4462-a68d-0b4624b2bc86" mediaType="application/json"
+                             postQueryString="false">
+                    <con:settings>
+                        <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/>
+                        </con:setting>
+                    </con:settings>
+                    <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
+                    <con:request>{
+                        "name": "Amigo",
+                        "email": "user000@ya.ru",
+                        "password": "amigo123"
+                        }
+                    </con:request>
                     <con:originalUri>http://localhost/restaurant_voting_system/rest/admin/users</con:originalUri>
                     <con:credentials>
                         <con:username>admin@gmail.com</con:username>

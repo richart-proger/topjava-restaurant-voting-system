@@ -8,8 +8,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
-import ru.javawebinar.restaurant_voting_system.web.rest.AbstractControllerTest;
 import ru.javawebinar.restaurant_voting_system.web.json.JsonUtil;
+import ru.javawebinar.restaurant_voting_system.web.rest.AbstractControllerTest;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -58,8 +58,8 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
 
         RestaurantTo created = RESTAURANT_TO_MATCHER.readFromJson(action);
-        int newId = created.getRestaurantId();
-        newRestaurantTo.setRestaurantId(newId);
+        int newId = created.getId();
+        newRestaurantTo.setId(newId);
         RESTAURANT_TO_MATCHER.assertMatch(created, newRestaurantTo);
         RESTAURANT_TO_MATCHER.assertMatch(getRestaurantTo(restaurantService.get(newId)), newRestaurantTo);
     }

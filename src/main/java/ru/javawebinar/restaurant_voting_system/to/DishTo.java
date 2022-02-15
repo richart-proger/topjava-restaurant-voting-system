@@ -1,46 +1,34 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.beans.ConstructorProperties;
 
-public class DishTo {
+public class DishTo extends BaseTo {
 
-    private Integer dishId;
+    @NotBlank
+    @Size(min = 2, max = 100)
+    private final String dishName;
 
-    private String dishName;
-
-    private Integer price;
-
-    public DishTo() {
-    }
+    @NotNull
+    @Range(min = 10, max = 5000)
+    private final Integer price;
 
     @ConstructorProperties({"id", "name", "price"})
     public DishTo(Integer dishId, String dishName, Integer price) {
-        this.dishId = dishId;
+        super(dishId);
         this.dishName = dishName;
         this.price = price;
-    }
-
-    public Integer getDishId() {
-        return dishId;
-    }
-
-    public void setDishId(Integer dishId) {
-        this.dishId = dishId;
     }
 
     public String getDishName() {
         return dishName;
     }
 
-    public void setDishName(String dishName) {
-        this.dishName = dishName;
-    }
-
     public Integer getPrice() {
         return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
     }
 }

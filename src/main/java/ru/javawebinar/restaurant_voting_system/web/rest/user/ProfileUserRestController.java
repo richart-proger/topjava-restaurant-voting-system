@@ -2,9 +2,13 @@ package ru.javawebinar.restaurant_voting_system.web.rest.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.javawebinar.restaurant_voting_system.to.UserTo;
 
+import javax.validation.Valid;
+
+import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
 import static ru.javawebinar.restaurant_voting_system.web.SecurityUtil.authUserId;
 
 @RestController
@@ -26,7 +30,8 @@ public class ProfileUserRestController extends AbstractUserController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody UserTo userTo) {
+    public void update(@RequestBody @Valid UserTo userTo, BindingResult result) {
+        validateBindingResult(result);
         super.update(userTo, authUserId());
     }
 }

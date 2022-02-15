@@ -3,16 +3,17 @@ package ru.javawebinar.restaurant_voting_system.web.rest.user;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.to.UserTo;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getUserFromUserTo;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getUserTo;
+import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
 
 @RestController
 @RequestMapping(value = AdminUserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -33,15 +34,21 @@ public class AdminUserRestController extends AbstractUserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserTo> createWithLocation(@RequestBody UserTo userTo) {
-        log.info("create {}", userTo);
-        User newUser = getUserFromUserTo(userTo);
-        User created = super.create(newUser);
+    public ResponseEntity<UserTo> createOrUpdateWithLocation(@RequestBody @Valid UserTo userTo, BindingResult result) {
+        log.info("createOrUpdateWithLocation {}", userTo);
+        validateBindingResult(result);
+        UserTo modified;
 
+        if (userTo.isNew()) {
+            modified = getUserTo(super.create(userTo));
+        } else {
+            super.update(userTo, userTo.id());
+            modified = super.get(userTo.getId());
+        }
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(getUserTo(created));
+                .path(REST_URL + modified.getId())
+                .buildAndExpand(modified.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(modified);
     }
 
     @Override
@@ -51,10 +58,10 @@ public class AdminUserRestController extends AbstractUserController {
         super.delete(id);
     }
 
-    @Override
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody UserTo userTo, @PathVariable int id) {
+    public void update(@RequestBody @Valid UserTo userTo, @PathVariable int id, BindingResult result) {
+        validateBindingResult(result);
         super.update(userTo, id);
     }
 
