@@ -795,7 +795,7 @@
                 </con:representation>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>401</con:status>
+                    <con:status>401 404 500</con:status>
                     <con:params/>
                     <con:element>html</con:element>
                 </con:representation>
@@ -1019,7 +1019,7 @@
                 <con:parameters/>
                 <con:representation type="FAULT">
                     <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                    <con:status>404 401</con:status>
+                    <con:status>404 401 500</con:status>
                     <con:params/>
                     <con:element>html</con:element>
                 </con:representation>
