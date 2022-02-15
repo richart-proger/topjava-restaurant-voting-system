@@ -14,6 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static ru.javawebinar.restaurant_voting_system.TestUtil.userHttpBasic;
+import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER;
 import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getVoteTo;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getVoteTos;
@@ -27,7 +29,8 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + VOTE_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + VOTE_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
@@ -37,7 +40,8 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getAllWithAuthUser() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL))
+        perform(MockMvcRequestBuilders.get(REST_URL)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(VOTE_TO_MATCHER.contentJson(getVoteTos(List.of(
@@ -49,7 +53,8 @@ class ProfileVoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + VOTE_ID))
+        perform(MockMvcRequestBuilders.delete(REST_URL + VOTE_ID)
+                .with(userHttpBasic(USER)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> getVoteTo(voteService.get(VOTE_ID)));
