@@ -1,5 +1,6 @@
 package ru.javawebinar.restaurant_voting_system.util;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ru.javawebinar.restaurant_voting_system.model.*;
 import ru.javawebinar.restaurant_voting_system.to.*;
 
@@ -36,6 +37,12 @@ public class ToUtil {
 
     public static UserTo asTo(User user) {
         return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());
+    }
+
+    public static User prepareToSave(User user, PasswordEncoder passwordEncoder) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEmail(user.getEmail().toLowerCase());
+        return user;
     }
 
     /**
