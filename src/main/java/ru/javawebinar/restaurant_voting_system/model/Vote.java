@@ -13,7 +13,6 @@ public class Vote extends AbstractBaseEntity {
 
     @JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "global_seq", foreignKeyDefinition = "START WITH 100000"))
     @ManyToOne(fetch = FetchType.LAZY)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     @JsonBackReference
     private User user;
@@ -24,7 +23,6 @@ public class Vote extends AbstractBaseEntity {
     @JsonIgnore
     @JoinColumn(name = "restaurant_id", nullable = false, foreignKey = @ForeignKey(name = "global_seq", foreignKeyDefinition = "START WITH 100000"))
     @ManyToOne(fetch = FetchType.EAGER)
-//    @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull
     private Restaurant restaurant;
 

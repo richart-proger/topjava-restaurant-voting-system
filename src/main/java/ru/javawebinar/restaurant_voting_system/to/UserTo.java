@@ -22,7 +22,7 @@ public class UserTo extends BaseTo implements Serializable {
 
     @NotBlank
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
-    private final String password;
+    private String password;
 
     @ConstructorProperties({"userId", "userName", "email", "password"})
     public UserTo(Integer id, String name, String email, String password) {
@@ -42,5 +42,9 @@ public class UserTo extends BaseTo implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

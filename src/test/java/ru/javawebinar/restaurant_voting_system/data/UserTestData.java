@@ -4,6 +4,7 @@ import ru.javawebinar.restaurant_voting_system.MatcherFactory;
 import ru.javawebinar.restaurant_voting_system.model.Role;
 import ru.javawebinar.restaurant_voting_system.model.User;
 import ru.javawebinar.restaurant_voting_system.to.UserTo;
+import ru.javawebinar.restaurant_voting_system.web.json.JsonUtil;
 
 import java.util.Collections;
 import java.util.Date;
@@ -34,5 +35,9 @@ public class UserTestData {
         updated.setEnabled(false);
         updated.setRoles(Collections.singletonList(Role.ADMIN));
         return updated;
+    }
+
+    public static String jsonWithPassword(UserTo userTo, String passw) {
+        return JsonUtil.writeAdditionProps(userTo, "password", passw);
     }
 }
