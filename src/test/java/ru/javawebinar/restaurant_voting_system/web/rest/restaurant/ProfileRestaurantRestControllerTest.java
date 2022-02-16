@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.restaurant_voting_system.TestUtil.userHttpBasic;
 import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
+import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.USER;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTo;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTos;
@@ -40,5 +41,18 @@ class ProfileRestaurantRestControllerTest extends AbstractControllerTest {
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(RESTAURANT_TO_MATCHER.contentJson(getRestaurantTo(RESTAURANT_1)));
+    }
+
+    /**
+     * ------------------------------ VOTE ------------------------------
+     **/
+
+    @Test
+    void createVoteWithEmptyMenu() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_4.getId())
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isFailedDependency());
     }
 }

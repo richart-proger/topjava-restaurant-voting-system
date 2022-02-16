@@ -18,11 +18,11 @@ public class MenuTo extends BaseTo {
     @NotNull
     private final List<DishTo> menu;
 
-    @ConstructorProperties({"id", "name", "restaurantName", "date"})
-    public MenuTo(Integer id, String name, List<DishTo> restaurantName, LocalDate date) {
+    @ConstructorProperties({"id", "name", "menu", "date"})
+    public MenuTo(Integer id, String name, List<DishTo> menu, LocalDate date) {
         super(id);
         this.restaurantName = name;
-        this.menu = restaurantName;
+        this.menu = menu;
         this.menuDate = date;
     }
 

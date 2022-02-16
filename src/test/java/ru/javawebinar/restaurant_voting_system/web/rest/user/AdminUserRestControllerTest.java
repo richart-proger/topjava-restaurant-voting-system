@@ -49,6 +49,14 @@ class AdminUserRestControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    void getNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
+    }
+
+    @Test
     void createWithLocation() throws Exception {
         UserTo newUserTo = getUserTo(getNew());
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
@@ -71,6 +79,14 @@ class AdminUserRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
         assertThrows(NotFoundException.class, () -> getUserTo(userService.get(USER_ID)));
+    }
+
+    @Test
+    void deleteNotFound() throws Exception {
+        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND)
+                .with(userHttpBasic(ADMIN)))
+                .andDo(print())
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test

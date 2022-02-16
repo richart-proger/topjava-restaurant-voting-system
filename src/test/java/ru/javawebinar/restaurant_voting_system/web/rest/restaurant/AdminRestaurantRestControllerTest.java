@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import ru.javawebinar.restaurant_voting_system.service.DishService;
 import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
+import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
 import ru.javawebinar.restaurant_voting_system.util.exception.NotFoundException;
 import ru.javawebinar.restaurant_voting_system.web.json.JsonUtil;
@@ -16,6 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.javawebinar.restaurant_voting_system.TestUtil.userHttpBasic;
+import static ru.javawebinar.restaurant_voting_system.data.DishTestData.getNewMenuForToday;
 import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTo;
@@ -27,6 +30,8 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
+    @Autowired
+    private DishService dishService;
 
     /**
      * ------------------------------ RESTAURANT ------------------------------
@@ -88,5 +93,38 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk());
 
         RESTAURANT_TO_MATCHER.assertMatch(getRestaurantTo(restaurantService.get(RESTAURANT_ID)), updated);
+    }
+
+    /**
+     * ------------------------------ MENU ------------------------------
+     **/
+
+    @Test
+    void createMenuForbidden() throws Exception {
+        MenuTo newMenuTo = getNewMenuForToday();
+        perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_ID + "/menu")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMenuTo)))
+                .andDo(print())
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void updateMenuForbidden() throws Exception {
+        MenuTo newMenuTo = getNewMenuForToday();
+        perform(MockMvcRequestBuilders.put(REST_URL + RESTAURANT_4.getId() + "/menu")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newMenuTo)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    void deleteMenuForbidden() throws Exception {
+        perform(MockMvcRequestBuilders.delete(REST_URL + RESTAURANT_4.getId() + "/menu")
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isForbidden());
     }
 }

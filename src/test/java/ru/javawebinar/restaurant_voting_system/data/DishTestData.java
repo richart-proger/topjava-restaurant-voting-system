@@ -2,6 +2,8 @@ package ru.javawebinar.restaurant_voting_system.data;
 
 import ru.javawebinar.restaurant_voting_system.MatcherFactory;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
+import ru.javawebinar.restaurant_voting_system.to.DishTo;
+import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -64,5 +66,11 @@ public class DishTestData {
         updated.setPrice(777);
         updated.setDate(LocalDate.now().plusDays(1));
         return updated;
+    }
+
+    public static MenuTo getNewMenuForToday() {
+        DishTo dish1 = new DishTo(null, DISH_3.getName(), 333);
+        DishTo dish2 = new DishTo(null, DISH_4.getName(), 555);
+        return new MenuTo(null, RESTAURANT_1.getName(), List.of(dish1, dish2), LocalDate.now());
     }
 }

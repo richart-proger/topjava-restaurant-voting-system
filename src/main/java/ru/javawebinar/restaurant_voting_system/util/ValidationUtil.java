@@ -13,9 +13,11 @@ import ru.javawebinar.restaurant_voting_system.util.exception.TimeExpiredExcepti
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.time.format.FormatStyle.SHORT;
 import static ru.javawebinar.restaurant_voting_system.util.DateUtil.TIME_LIMIT_FOR_VOTING;
 
 public class ValidationUtil {
@@ -63,7 +65,7 @@ public class ValidationUtil {
 
     public static void checkIfTimeHasExpired(LocalTime currentTime) {
         if (currentTime.isAfter(TIME_LIMIT_FOR_VOTING)) {
-            throw new TimeExpiredException("You have already voted today. It is too late, vote can't be changed");
+            throw new TimeExpiredException("You have already voted today. Vote can be change before 11:00. Now it's " + currentTime.format(DateTimeFormatter.ofLocalizedTime(SHORT)) + ". It is too late, your vote can't be changed");
         }
     }
 
