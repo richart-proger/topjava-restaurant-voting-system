@@ -46,7 +46,7 @@ public class AdminUserRestController extends AbstractUserController {
             modified = super.get(userTo.getId());
         }
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + modified.getId())
+                .path(REST_URL + '/' + modified.getId())
                 .buildAndExpand(modified.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(modified);
     }

@@ -63,7 +63,7 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
         Restaurant created = super.create(newRestaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "{id}")
+                .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(getRestaurantTo(created));
     }
@@ -116,7 +116,11 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
             setRestaurantAndDateInMenu(newMenu, restaurant);
             List<Dish> resultMenu = super.createMenu(newMenu);
             List<MenuTo> created = getFilteredMenuTosByRestaurant(restaurant, resultMenu, null, null);
-            return ResponseEntity.ok(getMenuTosFilteredByDate(created));
+
+            URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path(REST_URL + "/{id}/with-menu")
+                    .buildAndExpand(restaurantId).toUri();
+            return ResponseEntity.created(uriOfNewResource).body(getMenuTosFilteredByDate(created));
         } else {
             throw new ForbiddenException("Menu for today already exists. You can update it or delete it");
         }

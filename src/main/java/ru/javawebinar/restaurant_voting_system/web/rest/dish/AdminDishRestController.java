@@ -60,7 +60,7 @@ public class AdminDishRestController {
         Dish created = dishService.create(newDish);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "{id}")
+                .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(getDishTo(created));
     }

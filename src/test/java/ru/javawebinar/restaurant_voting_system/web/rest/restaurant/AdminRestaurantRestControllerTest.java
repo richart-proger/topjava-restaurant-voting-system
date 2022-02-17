@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import ru.javawebinar.restaurant_voting_system.service.DishService;
 import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
 import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
@@ -30,8 +29,6 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
 
     @Autowired
     private RestaurantService restaurantService;
-    @Autowired
-    private DishService dishService;
 
     /**
      * ------------------------------ RESTAURANT ------------------------------

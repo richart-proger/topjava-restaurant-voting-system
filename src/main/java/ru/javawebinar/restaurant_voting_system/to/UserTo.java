@@ -24,7 +24,7 @@ public class UserTo extends BaseTo implements Serializable {
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
     private String password;
 
-    @ConstructorProperties({"userId", "userName", "email", "password"})
+    @ConstructorProperties({"id", "name", "email", "password"})
     public UserTo(Integer id, String name, String email, String password) {
         super(id);
         this.name = name;

@@ -70,7 +70,7 @@ public class ProfileRestaurantRestController extends AbstractRestaurantControlle
         VoteTo created = super.voteForRestaurant(restaurantId, authUserId());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "{id}")
+                .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
