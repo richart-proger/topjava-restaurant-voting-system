@@ -24,7 +24,6 @@ import java.util.Map;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.*;
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.assureIdConsistent;
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.checkNew;
-import static ru.javawebinar.restaurant_voting_system.web.SecurityUtil.authUserId;
 
 public abstract class AbstractRestaurantController {
 
@@ -116,7 +115,7 @@ public abstract class AbstractRestaurantController {
 
     public VoteTo voteForRestaurant(int restaurantId, int authUserId) {
         log.info("voteForRestaurant with id={} by userId={}", restaurantId, authUserId);
-        User user = userService.get(authUserId());
+        User user = userService.get(authUserId);
         Restaurant restaurant = restaurantService.get(restaurantId);
         Vote newVote = new Vote(null, user, restaurant, LocalDate.now());
         Vote voteToUpdate = voteService.getForToday(authUserId);

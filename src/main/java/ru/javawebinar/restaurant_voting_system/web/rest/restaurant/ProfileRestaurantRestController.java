@@ -3,8 +3,10 @@ package ru.javawebinar.restaurant_voting_system.web.rest.restaurant;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javawebinar.restaurant_voting_system.AuthorizedUser;
 import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
 import ru.javawebinar.restaurant_voting_system.to.VoteTo;
@@ -13,8 +15,6 @@ import java.net.URI;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
-
-import static ru.javawebinar.restaurant_voting_system.web.SecurityUtil.authUserId;
 
 @RestController
 @RequestMapping(value = ProfileRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -66,8 +66,8 @@ public class ProfileRestaurantRestController extends AbstractRestaurantControlle
      **/
 
     @PostMapping(value = "/{id}")
-    public ResponseEntity<VoteTo> voteForRestaurant(@PathVariable(name = "id") int restaurantId) {
-        VoteTo created = super.voteForRestaurant(restaurantId, authUserId());
+    public ResponseEntity<VoteTo> voteForRestaurant(@PathVariable(name = "id") int restaurantId, @AuthenticationPrincipal AuthorizedUser authUser) {
+        VoteTo created = super.voteForRestaurant(restaurantId, authUser.getId());
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
