@@ -23,9 +23,9 @@ import static ru.javawebinar.restaurant_voting_system.data.UserTestData.ADMIN;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTo;
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTos;
 
-class AdminRestaurantRestControllerTest extends AbstractControllerTest {
+class RestaurantRestControllerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminRestaurantRestController.REST_URL + '/';
+    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
 
     @Autowired
     private RestaurantService restaurantService;
@@ -123,5 +123,18 @@ class AdminRestaurantRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isForbidden());
+    }
+
+    /**
+     * ------------------------------ VOTE ------------------------------
+     **/
+
+    @Test
+    void createVoteWithEmptyMenu() throws Exception {
+        perform(MockMvcRequestBuilders.post(REST_URL + RESTAURANT_4.getId())
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isFailedDependency());
     }
 }

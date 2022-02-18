@@ -1,57 +1,74 @@
 package ru.javawebinar.restaurant_voting_system.web.rest.restaurant;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.Nullable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import ru.javawebinar.restaurant_voting_system.AuthorizedUser;
 import ru.javawebinar.restaurant_voting_system.model.Dish;
 import ru.javawebinar.restaurant_voting_system.model.Restaurant;
+import ru.javawebinar.restaurant_voting_system.model.User;
+import ru.javawebinar.restaurant_voting_system.model.Vote;
 import ru.javawebinar.restaurant_voting_system.service.DishService;
 import ru.javawebinar.restaurant_voting_system.service.RestaurantService;
+import ru.javawebinar.restaurant_voting_system.service.UserService;
+import ru.javawebinar.restaurant_voting_system.service.VoteService;
 import ru.javawebinar.restaurant_voting_system.to.MenuTo;
 import ru.javawebinar.restaurant_voting_system.to.RestaurantTo;
+import ru.javawebinar.restaurant_voting_system.to.VoteTo;
+import ru.javawebinar.restaurant_voting_system.util.ValidationUtil;
 import ru.javawebinar.restaurant_voting_system.util.exception.ForbiddenException;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Map;
 
 import static ru.javawebinar.restaurant_voting_system.util.ToUtil.*;
-import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
+import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.*;
 
 @RestController
-@RequestMapping(value = AdminRestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminRestaurantRestController extends AbstractRestaurantController {
+@RequestMapping(value = RestaurantRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class RestaurantRestController {
 
-    public static final String REST_URL = "/rest/admin/restaurants";
+    public static final String REST_URL = "/rest/restaurants";
+    protected final Logger log = LoggerFactory.getLogger(RestaurantRestController.class);
 
     private final RestaurantService restaurantService;
     private final DishService dishService;
+    private final UserService userService;
+    private final VoteService voteService;
 
-    public AdminRestaurantRestController(RestaurantService restaurantService, DishService dishService) {
+    public RestaurantRestController(RestaurantService restaurantService, DishService dishService, UserService userService, VoteService voteService) {
         this.restaurantService = restaurantService;
         this.dishService = dishService;
+        this.userService = userService;
+        this.voteService = voteService;
     }
 
     /**
      * ------------------------------ RESTAURANT ------------------------------
      **/
 
-    @Override
     @GetMapping
     public List<RestaurantTo> getAll() {
-        return super.getAll();
+        log.info("getAll restaurants");
+        return getRestaurantTos(restaurantService.getAll());
     }
 
-    @Override
     @GetMapping("/{id}")
     public RestaurantTo get(@PathVariable int id) {
-        return super.get(id);
+        log.info("get restaurant by id={}", id);
+        return getRestaurantTo(restaurantService.get(id));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -60,7 +77,8 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
         validateBindingResult(result);
 
         Restaurant newRestaurant = getRestaurantFromRestaurantTo(restaurantTo);
-        Restaurant created = super.create(newRestaurant);
+        checkNew(newRestaurant);
+        Restaurant created = restaurantService.create(newRestaurant);
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -68,41 +86,52 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
         return ResponseEntity.created(uriOfNewResource).body(getRestaurantTo(created));
     }
 
-    @Override
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
-        super.delete(id);
+        log.info("delete restaurant with id={}", id);
+        restaurantService.delete(id);
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<RestaurantTo> updateWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, @PathVariable int id, BindingResult result) {
         log.info("updateWithLocation restaurant {}", restaurantTo);
         validateBindingResult(result);
-        return ResponseEntity.ok(super.update(restaurantTo, id));
+
+        Restaurant restaurant = getRestaurantFromRestaurantTo(restaurantTo);
+        assureIdConsistent(restaurant, id);
+        return ResponseEntity.ok(getRestaurantTo(restaurantService.update(restaurant)));
     }
 
     /**
      * ------------------------------ MENU ------------------------------
      **/
 
-    @Override
     @GetMapping("/menus")
     public Map<LocalDate, List<MenuTo>> getAllWithMenu(
             @RequestParam @Nullable LocalDate startDate,
             @RequestParam @Nullable LocalDate endDate
     ) {
-        return super.getAllWithMenu(startDate, endDate);
+        log.info("getAll restaurants with menus between startDate={} and endDate={}", startDate, endDate);
+        List<Restaurant> restaurants = restaurantService.getAll();
+        List<Dish> dishes = dishService.getAll();
+
+        List<MenuTo> menuTos = getFilteredMenuTosByRestaurantList(restaurants, dishes, startDate, endDate);
+        return getMenuTosFilteredByDate(menuTos);
     }
 
-    @Override
-    @GetMapping("/{id}/with-menu")
+    @GetMapping("/{id}/menu")
     public Map<LocalDate, List<MenuTo>> getWithMenu(
             @PathVariable int id,
             @RequestParam @Nullable LocalDate startDate,
             @RequestParam @Nullable LocalDate endDate
     ) {
-        return super.getWithMenu(id, startDate, endDate);
+        log.info("getWithMenu by restaurantId={} between startDate={} and endDate={}", id, startDate, endDate);
+        Restaurant restaurant = restaurantService.get(id);
+        List<Dish> dishes = dishService.getAllDishByRestaurantId(id);
+
+        List<MenuTo> menuTos = getFilteredMenuTosByRestaurant(restaurant, dishes, startDate, endDate);
+        return getMenuTosFilteredByDate(menuTos);
     }
 
     @PostMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -114,11 +143,13 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
             Restaurant restaurant = restaurantService.get(restaurantId);
             List<Dish> newMenu = getDishesFromTos(menuTo.getMenu());
             setRestaurantAndDateInMenu(newMenu, restaurant);
-            List<Dish> resultMenu = super.createMenu(newMenu);
-            List<MenuTo> created = getFilteredMenuTosByRestaurant(restaurant, resultMenu, null, null);
+            newMenu.forEach(ValidationUtil::checkNew);
+            dishService.createMenu(newMenu);
+
+            List<MenuTo> created = getFilteredMenuTosByRestaurant(restaurant, newMenu, null, null);
 
             URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                    .path(REST_URL + "/{id}/with-menu")
+                    .path(REST_URL + "/{id}/menu")
                     .buildAndExpand(restaurantId).toUri();
             return ResponseEntity.created(uriOfNewResource).body(getMenuTosFilteredByDate(created));
         } else {
@@ -126,14 +157,14 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
         }
     }
 
-    @Override
     @DeleteMapping("/{id}/menu")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteMenu(@PathVariable(name = "id") int restaurantId) {
+        log.info("deleteMenu with restaurantId={}", restaurantId);
         if (dishService.getDishByDate(restaurantId, LocalDate.now()).isEmpty()) {
             throw new ForbiddenException("There is nothing to delete, there is no menu for today");
         }
-        super.deleteMenu(restaurantId);
+        dishService.deleteMenu(restaurantId, LocalDate.now());
     }
 
     @PutMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -148,8 +179,35 @@ public class AdminRestaurantRestController extends AbstractRestaurantController 
         deleteMenu(restaurantId);
         List<Dish> menuForUpdate = getDishesFromTos(menuTo.getMenu());
         setRestaurantAndDateInMenu(menuForUpdate, restaurant);
-        List<Dish> updatedMenu = super.updateMenu(menuForUpdate, restaurantId);
-        List<MenuTo> menuTos = getFilteredMenuTosByRestaurant(restaurant, updatedMenu, null, null);
+
+        menuForUpdate.forEach(dish -> assureIdConsistent(dish.getRestaurant(), restaurantId));
+
+        List<MenuTo> menuTos = getFilteredMenuTosByRestaurant(restaurant, dishService.createMenu(menuForUpdate), null, null);
         return ResponseEntity.ok(getMenuTosFilteredByDate(menuTos));
+    }
+
+    /**
+     * ------------------------------ VOTE ------------------------------
+     **/
+
+    @PostMapping(value = "/{id}")
+    public ResponseEntity<VoteTo> voteForRestaurantWithLocation(@PathVariable(name = "id") int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
+        log.info("voteForRestaurant with id={} by userId={}", restaurantId, authUser.getId());
+        VoteTo created;
+        User user = userService.get(authUser.getId());
+        Restaurant restaurant = restaurantService.get(restaurantId);
+        Vote newVote = new Vote(null, user, restaurant, LocalDate.now());
+        Vote voteToUpdate = voteService.getForToday(authUser.getId());
+
+        if (voteToUpdate != null) {
+            newVote.setId(voteToUpdate.getId());
+            created = getVoteTo(voteService.update(newVote, authUser.getId(), LocalTime.now()));
+        } else {
+            created = getVoteTo(voteService.create(newVote, authUser.getId()));
+        }
+        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(REST_URL + "/{id}")
+                .buildAndExpand(created.getId()).toUri();
+        return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }

@@ -23,17 +23,17 @@ import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.assure
 import static ru.javawebinar.restaurant_voting_system.util.ValidationUtil.validateBindingResult;
 
 @RestController
-@RequestMapping(value = AdminDishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class AdminDishRestController {
+@RequestMapping(value = DishRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class DishRestController {
 
-    private static final Logger log = getLogger(AdminDishRestController.class);
+    private static final Logger log = getLogger(DishRestController.class);
 
     public static final String REST_URL = "/rest/admin/dishes";
 
     private final DishService dishService;
     private final RestaurantService restaurantService;
 
-    public AdminDishRestController(DishService dishService, RestaurantService restaurantService) {
+    public DishRestController(DishService dishService, RestaurantService restaurantService) {
         this.dishService = dishService;
         this.restaurantService = restaurantService;
     }
