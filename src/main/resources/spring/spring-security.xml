@@ -24,10 +24,9 @@
         <intercept-url pattern="/rest/votes/**" access="isAuthenticated()"/>
         <intercept-url pattern="/rest/restaurants/**" access="isAuthenticated()"/>
 
-
-        <intercept-url pattern="/rest/register" access="isAnonymous()"/>
-
-        <intercept-url pattern="/rest/restaurants/**" access="permitAll()"/>
+        <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
+        <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
+        <intercept-url pattern="/v2/api-docs/**" access="permitAll()"/>
 
         <csrf disabled="true"/>
     </http>

@@ -61,6 +61,9 @@
 
         <!--JSON-->
         <jackson.version>2.13.0</jackson.version>
+
+        <!--SpringFox Swagger2-->
+        <swagger.version>2.9.2</swagger.version>
     </properties>
 
     <dependencies>
@@ -242,6 +245,18 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <!--SpringFox Swagger2-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -275,11 +290,5 @@
             </plugins>
         </pluginManagement>
     </build>
-
-    <profiles>
-    </profiles>
-
-    <dependencyManagement>
-    </dependencyManagement>
 
 </project>

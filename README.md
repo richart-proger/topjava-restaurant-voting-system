@@ -19,3 +19,4 @@
 * SLF4J
 * SoapUI
 * Maven 3
+* Swagger2
