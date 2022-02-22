@@ -72,6 +72,7 @@ public class RestaurantRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, BindingResult result) {
         log.info("createWithLocation restaurant {}", restaurantTo);
         validateBindingResult(result);
@@ -94,13 +95,14 @@ public class RestaurantRestController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<RestaurantTo> updateWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, @PathVariable int id, BindingResult result) {
-        log.info("updateWithLocation restaurant {}", restaurantTo);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody @Valid RestaurantTo restaurantTo, @PathVariable int id, BindingResult result) {
+        log.info("update restaurant {}", restaurantTo);
         validateBindingResult(result);
 
         Restaurant restaurant = getRestaurantFromRestaurantTo(restaurantTo);
         assureIdConsistent(restaurant, id);
-        return ResponseEntity.ok(getRestaurantTo(restaurantService.update(restaurant)));
+        restaurantService.update(restaurant);
     }
 
     /**
@@ -135,6 +137,7 @@ public class RestaurantRestController {
     }
 
     @PostMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Map<LocalDate, List<MenuTo>>> createMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
         log.info("createMenuWithLocation for restaurant with id={} and menu={}", restaurantId, menuTo);
         validateBindingResult(result);
@@ -168,8 +171,9 @@ public class RestaurantRestController {
     }
 
     @PutMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<LocalDate, List<MenuTo>>> updateMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
-        log.info("updateMenuWithLocation for restaurant with id={} and menu={}", restaurantId, menuTo);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateMenu(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
+        log.info("updateMenu for restaurant with id={} and menu={}", restaurantId, menuTo);
         validateBindingResult(result);
 
         if (dishService.getDishByDate(restaurantId, LocalDate.now()).isEmpty()) {
@@ -181,9 +185,6 @@ public class RestaurantRestController {
         setRestaurantAndDateInMenu(menuForUpdate, restaurant);
 
         menuForUpdate.forEach(dish -> assureIdConsistent(dish.getRestaurant(), restaurantId));
-
-        List<MenuTo> menuTos = getFilteredMenuTosByRestaurant(restaurant, dishService.createMenu(menuForUpdate), null, null);
-        return ResponseEntity.ok(getMenuTosFilteredByDate(menuTos));
     }
 
     /**
@@ -191,6 +192,7 @@ public class RestaurantRestController {
      **/
 
     @PostMapping(value = "/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<VoteTo> voteForRestaurantWithLocation(@PathVariable(name = "id") int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
         log.info("voteForRestaurant with id={} by userId={}", restaurantId, authUser.getId());
         VoteTo created;

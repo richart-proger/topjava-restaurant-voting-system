@@ -87,7 +87,7 @@ class RestaurantRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
 
         RESTAURANT_TO_MATCHER.assertMatch(getRestaurantTo(restaurantService.get(RESTAURANT_ID)), updated);
     }

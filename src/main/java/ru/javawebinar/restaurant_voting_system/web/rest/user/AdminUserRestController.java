@@ -34,6 +34,7 @@ public class AdminUserRestController extends AbstractUserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserTo> createOrUpdateWithLocation(@RequestBody @Valid UserTo userTo, BindingResult result) {
         log.info("createOrUpdateWithLocation {}", userTo);
         validateBindingResult(result);

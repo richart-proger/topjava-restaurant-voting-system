@@ -42,6 +42,7 @@ public class ProfileUserRestController extends AbstractUserController {
     }
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserTo> registerWithLocation(@Valid @RequestBody UserTo userTo, BindingResult result) {
         log.info("register {}", userTo);
         validateBindingResult(result);
@@ -49,7 +50,7 @@ public class ProfileUserRestController extends AbstractUserController {
         UserTo created = getUserTo(super.create(userTo));
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL)
-                .buildAndExpand().toUri();
+                .build().toUri();
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 }

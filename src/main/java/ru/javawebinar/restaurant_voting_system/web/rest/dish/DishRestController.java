@@ -51,6 +51,7 @@ public class DishRestController {
     }
 
     @PostMapping(value = "/restaurants/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<DishTo> createDishWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid DishTo dishTo, BindingResult result) {
         log.info("createWithLocation for restaurant with id={} and dish={}", restaurantId, dishTo);
         validateBindingResult(result);
@@ -76,7 +77,8 @@ public class DishRestController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<DishTo> updateWithLocation(@RequestBody @Valid DishTo dishTo, @PathVariable int id, BindingResult result) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void update(@RequestBody @Valid DishTo dishTo, @PathVariable int id, BindingResult result) {
         log.info("update dish {} with id={}", dishTo, id);
         validateBindingResult(result);
 
@@ -86,6 +88,6 @@ public class DishRestController {
         Dish dish = getDishFromDishTo(dishTo);
         setRestaurantAndDateInMenu(List.of(dish), dishService.get(id).getRestaurant());
         assureIdConsistent(dish, id);
-        return ResponseEntity.ok(getDishTo(dishService.update(dish)));
+        dishService.update(dish);
     }
 }

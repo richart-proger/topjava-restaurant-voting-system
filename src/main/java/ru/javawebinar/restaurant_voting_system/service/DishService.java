@@ -61,9 +61,9 @@ public class DishService {
     }
 
     @CacheEvict(value = "dishes", allEntries = true)
-    public Dish update(Dish dish) {
+    public void update(Dish dish) {
         Assert.notNull(dish, "Dish must be not null");
-        return checkNotFoundWithId(repository.save(dish), dish.getId());
+        checkNotFoundWithId(repository.save(dish), dish.getId());
     }
 
     public List<Dish> getDishByDate(int restaurantId, LocalDate date) {
