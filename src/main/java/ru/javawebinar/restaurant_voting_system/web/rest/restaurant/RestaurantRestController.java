@@ -1,11 +1,13 @@
 package ru.javawebinar.restaurant_voting_system.web.rest.restaurant;
 
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +50,10 @@ public class RestaurantRestController {
     private final UserService userService;
     private final VoteService voteService;
 
-    public RestaurantRestController(RestaurantService restaurantService, DishService dishService, UserService userService, VoteService voteService) {
+    public RestaurantRestController(
+            RestaurantService restaurantService, DishService dishService,
+            UserService userService, VoteService voteService
+    ) {
         this.restaurantService = restaurantService;
         this.dishService = dishService;
         this.userService = userService;
@@ -59,27 +64,35 @@ public class RestaurantRestController {
      * ------------------------------ RESTAURANT ------------------------------
      **/
 
+    @ApiOperation(value = "Get all restaurants",
+            notes = "Returns a list of restaurants. Allowed with or without authorization (Unauthorized/Profile/Admin).")
     @GetMapping
     public List<RestaurantTo> getAll() {
         log.info("getAll restaurants");
         return getRestaurantTos(restaurantService.getAll());
     }
 
+    @ApiOperation(value = "Get restaurant by id",
+            notes = "Returns a restaurant as per the id. Allowed with authorization (Profile/Admin).",
+            authorizations = {@Authorization(value = "Basic")})
     @GetMapping("/{id}")
-    public RestaurantTo get(@PathVariable int id) {
+    public RestaurantTo get(@PathVariable @ApiParam(name = "id", value = "Restaurant id", example = "100002") int id) {
         log.info("get restaurant by id={}", id);
         return getRestaurantTo(restaurantService.get(id));
     }
 
+    @ApiOperation(value = "Create restaurant with location",
+            notes = "Returns a new restaurant. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<RestaurantTo> createWithLocation(@RequestBody @Valid RestaurantTo restaurantTo, BindingResult result) {
         log.info("createWithLocation restaurant {}", restaurantTo);
         validateBindingResult(result);
 
-        Restaurant newRestaurant = getRestaurantFromRestaurantTo(restaurantTo);
-        checkNew(newRestaurant);
-        Restaurant created = restaurantService.create(newRestaurant);
+        checkNew(restaurantTo);
+        Restaurant created = restaurantService.create(createNewFromRestaurantTo(restaurantTo));
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
@@ -87,32 +100,45 @@ public class RestaurantRestController {
         return ResponseEntity.created(uriOfNewResource).body(getRestaurantTo(created));
     }
 
+    @ApiOperation(value = "Delete restaurant", notes = "Delete restaurant by id. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
+    public void delete(@PathVariable @ApiParam(name = "id", value = "Restaurant id", example = "100002") int id) {
         log.info("delete restaurant with id={}", id);
         restaurantService.delete(id);
     }
 
+    @ApiOperation(value = "Update restaurant", notes = "Modifies the entire restaurant. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void update(@RequestBody @Valid RestaurantTo restaurantTo, @PathVariable int id, BindingResult result) {
+    public void update(
+            @RequestBody @Valid RestaurantTo restaurantTo,
+            @PathVariable @ApiParam(name = "id", value = "Restaurant id", example = "100005") int id,
+            BindingResult result
+    ) {
         log.info("update restaurant {}", restaurantTo);
         validateBindingResult(result);
 
-        Restaurant restaurant = getRestaurantFromRestaurantTo(restaurantTo);
-        assureIdConsistent(restaurant, id);
-        restaurantService.update(restaurant);
+        assureIdConsistent(restaurantTo, id);
+        restaurantService.update(restaurantTo);
     }
 
     /**
      * ------------------------------ MENU ------------------------------
      **/
 
+    @ApiOperation(value = "Get all restaurants with menus",
+            notes = "Returns a list of restaurants with menus between startDate and endDate. " +
+                    "If the startDate and endDate are not specified, the menu for today will be displayed. " +
+                    "Allowed with or without authorization (Unauthorized/Profile/Admin).")
     @GetMapping("/menus")
     public Map<LocalDate, List<MenuTo>> getAllWithMenu(
-            @RequestParam @Nullable LocalDate startDate,
-            @RequestParam @Nullable LocalDate endDate
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         log.info("getAll restaurants with menus between startDate={} and endDate={}", startDate, endDate);
         List<Restaurant> restaurants = restaurantService.getAll();
@@ -122,11 +148,16 @@ public class RestaurantRestController {
         return getMenuTosFilteredByDate(menuTos);
     }
 
+    @ApiOperation(value = "Get a specific restaurant with its menu/menus",
+            notes = "Returns a restaurant with menus between startDate and endDate. " +
+                    "If the startDate and endDate are not specified, the menu for today will be displayed. " +
+                    "Allowed with authorization (Profile/Admin).",
+            authorizations = {@Authorization(value = "Basic")})
     @GetMapping("/{id}/menu")
     public Map<LocalDate, List<MenuTo>> getWithMenu(
-            @PathVariable int id,
-            @RequestParam @Nullable LocalDate startDate,
-            @RequestParam @Nullable LocalDate endDate
+            @PathVariable @ApiParam(name = "id", value = "Restaurant id", example = "100002") int id,
+            @RequestParam(value = "startDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam(value = "endDate", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
     ) {
         log.info("getWithMenu by restaurantId={} between startDate={} and endDate={}", id, startDate, endDate);
         Restaurant restaurant = restaurantService.get(id);
@@ -136,9 +167,16 @@ public class RestaurantRestController {
         return getMenuTosFilteredByDate(menuTos);
     }
 
+    @ApiOperation(value = "Create menu with location",
+            notes = "Returns a new menu for today for a specific restaurant. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Map<LocalDate, List<MenuTo>>> createMenuWithLocation(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
+    public ResponseEntity<Map<LocalDate, List<MenuTo>>> createMenuWithLocation(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "Restaurant id", example = "100005") int restaurantId,
+            @RequestBody @Valid MenuTo menuTo, BindingResult result
+    ) {
         log.info("createMenuWithLocation for restaurant with id={} and menu={}", restaurantId, menuTo);
         validateBindingResult(result);
 
@@ -160,9 +198,14 @@ public class RestaurantRestController {
         }
     }
 
+    @ApiOperation(value = "Delete menu", notes = "Deletes the menu if it exists for specific restaurant. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}/menu")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteMenu(@PathVariable(name = "id") int restaurantId) {
+    public void deleteMenu(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "Restaurant id", example = "100002") int restaurantId
+    ) {
         log.info("deleteMenu with restaurantId={}", restaurantId);
         if (dishService.getDishByDate(restaurantId, LocalDate.now()).isEmpty()) {
             throw new ForbiddenException("There is nothing to delete, there is no menu for today");
@@ -170,9 +213,15 @@ public class RestaurantRestController {
         dishService.deleteMenu(restaurantId, LocalDate.now());
     }
 
+    @ApiOperation(value = "Update menu", notes = "Modifies the entire menu if it exists for specific restaurant. Allowed for admin.",
+            authorizations = {@Authorization(value = "Basic")})
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}/menu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateMenu(@PathVariable(name = "id") int restaurantId, @RequestBody @Valid MenuTo menuTo, BindingResult result) {
+    public void updateMenu(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "Restaurant id", example = "100005") int restaurantId,
+            @RequestBody @Valid MenuTo menuTo, BindingResult result
+    ) {
         log.info("updateMenu for restaurant with id={} and menu={}", restaurantId, menuTo);
         validateBindingResult(result);
 
@@ -183,22 +232,35 @@ public class RestaurantRestController {
         deleteMenu(restaurantId);
         List<Dish> menuForUpdate = getDishesFromTos(menuTo.getMenu());
         setRestaurantAndDateInMenu(menuForUpdate, restaurant);
-
         menuForUpdate.forEach(dish -> assureIdConsistent(dish.getRestaurant(), restaurantId));
+        dishService.createMenu(menuForUpdate);
     }
 
     /**
      * ------------------------------ VOTE ------------------------------
      **/
 
+    @ApiOperation(value = "Create vote with location",
+            notes = "Returns a new vote for specific restaurant. Allowed with authorization (Profile/Admin).",
+            authorizations = {@Authorization(value = "Basic")})
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "OK - Successfully retrieved"),
+            @ApiResponse(code = 401, message = "Unauthorized - The request requires user authentication"),
+            @ApiResponse(code = 403, message = "Forbidden - The server understood the request, but is refusing to authorize it"),
+            @ApiResponse(code = 404, message = "Not found - The restaurant was not found"),
+            @ApiResponse(code = 405, message = "Method Not Allowed - Voting time is expired")
+    })
     @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<VoteTo> voteForRestaurantWithLocation(@PathVariable(name = "id") int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser) {
+    public ResponseEntity<VoteTo> voteForRestaurantWithLocation(
+            @PathVariable(name = "id") @ApiParam(name = "id", value = "Restaurant id",
+                    example = "100003") int restaurantId, @ApiIgnore @AuthenticationPrincipal AuthorizedUser authUser
+    ) {
         log.info("voteForRestaurant with id={} by userId={}", restaurantId, authUser.getId());
         VoteTo created;
         User user = userService.get(authUser.getId());
         Restaurant restaurant = restaurantService.get(restaurantId);
-        Vote newVote = new Vote(null, user, restaurant, LocalDate.now());
+        Vote newVote = getNewVoteTo(user, restaurant);
         Vote voteToUpdate = voteService.getForToday(authUser.getId());
 
         if (voteToUpdate != null) {

@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static ru.javawebinar.restaurant_voting_system.data.DishTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.RestaurantTestData.*;
 import static ru.javawebinar.restaurant_voting_system.data.VoteTestData.*;
+import static ru.javawebinar.restaurant_voting_system.util.ToUtil.getRestaurantTo;
 
 public class RestaurantServiceTest extends AbstractServiceTest {
 
@@ -75,7 +76,7 @@ public class RestaurantServiceTest extends AbstractServiceTest {
     @Test
     public void update() {
         Restaurant updated = getUpdatedRestaurant();
-        service.update(updated);
+        service.update(getRestaurantTo(updated));
         updated = getUpdatedRestaurant();
         RESTAURANT_MATCHER.assertMatch(service.get(RESTAURANT_ID), updated);
     }

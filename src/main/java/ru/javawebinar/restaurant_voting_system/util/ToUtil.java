@@ -24,11 +24,11 @@ public class ToUtil {
         return new UserTo(user.getId(), user.getName(), user.getEmail(), user.getPassword());
     }
 
-    public static User createNewFromTo(UserTo userTo) {
+    public static User createNewFromUserTo(UserTo userTo) {
         return new User(null, userTo.getName(), userTo.getEmail().toLowerCase(), userTo.getPassword(), Role.USER);
     }
 
-    public static User updateFromTo(User user, UserTo userTo) {
+    public static User updateUserFromTo(User user, UserTo userTo) {
         user.setName(userTo.getName());
         user.setEmail(userTo.getEmail().toLowerCase());
         user.setPassword(userTo.getPassword());
@@ -56,6 +56,10 @@ public class ToUtil {
 
     public static VoteTo getVoteTo(Vote vote) {
         return new VoteTo(vote.getId(), vote.getRestaurant().getId(), vote.getRestaurantName(), vote.getBookingDate());
+    }
+
+    public static Vote getNewVoteTo(User user, Restaurant restaurant) {
+        return new Vote(null, user, restaurant, LocalDate.now());
     }
 
     /**
@@ -90,6 +94,15 @@ public class ToUtil {
 
     public static Restaurant getRestaurantFromRestaurantTo(RestaurantTo restaurantTo) {
         return new Restaurant(restaurantTo.getId(), restaurantTo.getRestaurantName());
+    }
+
+    public static Restaurant updateFromRestaurantTo(Restaurant restaurant, RestaurantTo restaurantTo) {
+        restaurant.setName(restaurantTo.getRestaurantName());
+        return restaurant;
+    }
+
+    public static Restaurant createNewFromRestaurantTo(RestaurantTo restaurantTo) {
+        return new Restaurant(null, restaurantTo.getRestaurantName());
     }
 
     /**
@@ -157,6 +170,17 @@ public class ToUtil {
 
     public static Dish getDishFromDishTo(DishTo dishTo) {
         return new Dish(dishTo.getId(), dishTo.getDishName(), dishTo.getPrice());
+    }
+
+    public static Dish createNewFromDishTo(DishTo dishTo, Restaurant restaurant) {
+        return new Dish(null, dishTo.getDishName(), dishTo.getPrice(), LocalDate.now(), restaurant);
+    }
+
+    public static Dish updateDishFromTo(Dish dish, DishTo dishTo) {
+        dish.setName(dishTo.getDishName());
+        dish.setPrice(dishTo.getPrice());
+
+        return dish;
     }
 
     public static void setRestaurantAndDateInMenu(List<Dish> menu, Restaurant restaurant) {

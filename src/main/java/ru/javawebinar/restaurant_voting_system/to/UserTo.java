@@ -1,5 +1,7 @@
 package ru.javawebinar.restaurant_voting_system.to;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -13,15 +15,18 @@ public class UserTo extends BaseTo implements Serializable {
 
     @NotBlank
     @Size(min = 2, max = 100)
+    @ApiModelProperty(example = "Amigo")
     private final String name;
 
     @Email
     @NotBlank
     @Size(max = 100)
+    @ApiModelProperty(example = "amigo@gmail.com")
     private final String email;
 
     @NotBlank
     @Size(min = 5, max = 32, message = "length must be between 5 and 32 characters")
+    @ApiModelProperty(example = "amigoscode")
     private String password;
 
     @ConstructorProperties({"id", "name", "email", "password"})

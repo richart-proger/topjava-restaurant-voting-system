@@ -94,6 +94,12 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="599c26f7-5bb9-4356-9168-244661091cb7" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -129,7 +135,7 @@
                     </con:representation>
                     <con:representation type="FAULT">
                         <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>500 400 401</con:status>
+                        <con:status>500 400 401 403</con:status>
                         <con:params/>
                         <con:element>html</con:element>
                     </con:representation>
@@ -145,6 +151,18 @@
                         <con:params/>
                         <con:element xmlns:ns="http://http/rest/admin/dishes/100010">ns:Response</con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="fa9b3713-1955-4e6a-9f44-4706aa320b5d" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -152,8 +170,7 @@
                         </con:settings>
                         <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                         <con:request>{
-                            "id": null,
-                            "name": "Some food",
+                            "dishName": "Some food",
                             "price": 555
                             }
                         </con:request>
@@ -203,8 +220,7 @@
                         </con:settings>
                         <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                         <con:request>{
-                            "id": null,
-                            "name": "New food",
+                            "dishName": "New food",
                             "price": 888
                             }
                         </con:request>
@@ -258,7 +274,7 @@
         <con:resource name="Votes admin" path="/rest/votes/history" id="50e12e98-e5a3-47d7-9a49-df759a72f269">
             <con:settings/>
             <con:parameters/>
-            <con:resource name="Get vote 100028" path="100028" id="7c967b35-9b6c-4a81-8725-3b78f5908e51">
+            <con:resource name="Get vote 100026" path="100026" id="7c967b35-9b6c-4a81-8725-3b78f5908e51">
                 <con:settings/>
                 <con:parameters/>
                 <con:method name="Method 1" id="767c5fda-da23-49a0-9d84-c2f73c4bbec9" method="GET">
@@ -274,7 +290,7 @@
                     </con:representation>
                     <con:representation type="FAULT">
                         <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                        <con:status>422</con:status>
+                        <con:status>422 500</con:status>
                         <con:params/>
                         <con:element>html</con:element>
                     </con:representation>
@@ -405,6 +421,12 @@
                         <con:status>500 404</con:status>
                         <con:params/>
                         <con:element>html</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
                     </con:representation>
                     <con:representation type="RESPONSE">
                         <con:mediaType xsi:nil="true"/>
@@ -706,6 +728,12 @@
                         <con:params/>
                         <con:element>data</con:element>
                     </con:representation>
+                    <con:representation type="FAULT">
+                        <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                        <con:status>422</con:status>
+                        <con:params/>
+                        <con:element>html</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="fe88b1f0-58e8-4f8d-b786-643993c3ef52" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -868,7 +896,6 @@
                         </con:settings>
                         <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                         <con:request>{
-                            "id": null,
                             "name": "Amigo",
                             "email": "amigo@yandex.ru",
                             "password": "pazzword"
@@ -944,6 +971,12 @@
                     <con:representation type="REQUEST">
                         <con:mediaType>application/json</con:mediaType>
                         <con:params/>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
                     </con:representation>
                     <con:representation type="RESPONSE">
                         <con:mediaType xsi:nil="true"/>
@@ -1210,7 +1243,7 @@
                         <con:parameters/>
                         <con:representation type="FAULT">
                             <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                            <con:status>403</con:status>
+                            <con:status>403 400</con:status>
                             <con:params/>
                             <con:element>html</con:element>
                         </con:representation>
@@ -1225,17 +1258,15 @@
                             </con:settings>
                             <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                             <con:request>{
-                                "name": "Italian restaurant",
+                                "restaurantName": "Italian restaurant",
                                 "id": 100002,
                                 "menu": [
                                 {
-                                "id": null,
-                                "name": "Some food 1",
+                                "dishName": "Some food 1",
                                 "price": 777
                                 },
                                 {
-                                "id": null,
-                                "name": "Some food 2",
+                                "dishName": "Some food 2",
                                 "price": 999
                                 }
                                 ]
@@ -1256,7 +1287,7 @@
                         </con:request>
                     </con:method>
                 </con:resource>
-                <con:method name="Get restaurant" id="fb5d9d8a-b9aa-4734-8a66-3fb27fe439ce" method="DELETE">
+                <con:method name="Get restaurant" id="fb5d9d8a-b9aa-4734-8a66-3fb27fe439ce" method="GET">
                     <con:settings/>
                     <con:parameters/>
                     <con:representation type="RESPONSE">
@@ -1276,6 +1307,12 @@
                     <con:representation type="REQUEST">
                         <con:mediaType>application/json</con:mediaType>
                         <con:params/>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
                     </con:representation>
                     <con:request name="Request 1" id="f16908c0-55ae-48a5-b105-b58a9395f084" mediaType="application/json"
                                  postQueryString="false">
@@ -1298,7 +1335,7 @@
                         <con:parameters/>
                     </con:request>
                 </con:method>
-                <con:method name="Delete restaurant" id="fb5d9d8a-b9aa-4734-8a66-3fb27fe439ce" method="GET">
+                <con:method name="Delete restaurant" id="fb5d9d8a-b9aa-4734-8a66-3fb27fe439ce" method="DELETE">
                     <con:settings/>
                     <con:parameters/>
                     <con:representation type="RESPONSE">
@@ -1309,8 +1346,8 @@
                             ns:Response
                         </con:element>
                     </con:representation>
-                    <con:request name="Request 1" id="f16908c0-55ae-48a5-b105-b58a9395f084"
-                                 mediaType="application/json">
+                    <con:request name="Request 1" id="f16908c0-55ae-48a5-b105-b58a9395f084" mediaType="application/json"
+                                 postQueryString="false">
                         <con:settings>
                             <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
                         </con:settings>
@@ -1351,6 +1388,12 @@
                             <con:mediaType>application/json</con:mediaType>
                             <con:params/>
                         </con:representation>
+                        <con:representation type="FAULT">
+                            <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                            <con:status>400 403</con:status>
+                            <con:params/>
+                            <con:element>html</con:element>
+                        </con:representation>
                         <con:request name="Request 1" id="21b2fa98-5bb4-43cc-8b03-328fc134e577"
                                      mediaType="application/json" postQueryString="false">
                             <con:settings>
@@ -1358,17 +1401,15 @@
                             </con:settings>
                             <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                             <con:request>{
-                                "name": "Mexican restaurant",
+                                "restaurantName": "Mexican restaurant",
                                 "id": 100005,
                                 "menu": [
                                 {
-                                "id": null,
-                                "name": "Some food 1",
+                                "dishName": "Some food 1",
                                 "price": 777
                                 },
                                 {
-                                "id": null,
-                                "name": "Some food 2",
+                                "dishName": "Some food 2",
                                 "price": 999
                                 }
                                 ]
@@ -1437,13 +1478,37 @@
                         </con:representation>
                         <con:representation type="FAULT">
                             <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                            <con:status>403</con:status>
+                            <con:status>403 400</con:status>
                             <con:params/>
                             <con:element>html</con:element>
                         </con:representation>
                         <con:representation type="RESPONSE">
                             <con:mediaType xsi:nil="true"/>
                             <con:status>0</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
                             <con:params/>
                             <con:element>data</con:element>
                         </con:representation>
@@ -1460,22 +1525,19 @@
                             </con:settings>
                             <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                             <con:request>{
-                                "name": "Mexican restaurant",
+                                "restaurantName": "Mexican restaurant",
                                 "id": 100005,
                                 "menu": [
                                 {
-                                "id": null,
-                                "name": "Updated food 1",
+                                "dishName": "Updated food 1",
                                 "price": 500
                                 },
                                 {
-                                "id": null,
-                                "name": "Updated food 2",
+                                "dishName": "Updated food 2",
                                 "price": 1000
                                 },
                                 {
-                                "id": null,
-                                "name": "Updated food 3",
+                                "dishName": "Updated food 3",
                                 "price": 2000
                                 }
                                 ]
@@ -1513,6 +1575,18 @@
                             <con:status>403</con:status>
                             <con:params/>
                             <con:element>html</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
+                        </con:representation>
+                        <con:representation type="RESPONSE">
+                            <con:mediaType xsi:nil="true"/>
+                            <con:status>204</con:status>
+                            <con:params/>
+                            <con:element>data</con:element>
                         </con:representation>
                         <con:representation type="RESPONSE">
                             <con:mediaType xsi:nil="true"/>
@@ -1591,6 +1665,24 @@
                             ns:Response
                         </con:element>
                     </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
+                    <con:representation type="RESPONSE">
+                        <con:mediaType xsi:nil="true"/>
+                        <con:status>204</con:status>
+                        <con:params/>
+                        <con:element>data</con:element>
+                    </con:representation>
                     <con:request name="Request 1" id="9869f26e-3e77-4887-aa82-aff99125cbdd" mediaType="application/json"
                                  postQueryString="false">
                         <con:settings>
@@ -1598,7 +1690,6 @@
                         </con:settings>
                         <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                         <con:request>{
-                            "id": null,
                             "name": "Updated restaurant"
                             }
                         </con:request>
@@ -1754,6 +1845,12 @@
                     <con:element xmlns:res="http://localhost/restaurant_voting_system/rest/restaurants">res:Response
                     </con:element>
                 </con:representation>
+                <con:representation type="FAULT">
+                    <con:mediaType>text/html;charset=utf-8</con:mediaType>
+                    <con:status>415</con:status>
+                    <con:params/>
+                    <con:element>html</con:element>
+                </con:representation>
                 <con:request name="Request 1" id="9bc8162f-4889-4b90-bd33-4b6b847c54d2" mediaType="application/json"
                              postQueryString="false">
                     <con:settings>
@@ -1762,7 +1859,6 @@
                     </con:settings>
                     <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
                     <con:request>{
-                        "id": null,
                         "name": "Some restaurant"
                         }
                     </con:request>
@@ -1924,44 +2020,7 @@
                         </con:request>
                     </con:method>
                 </con:resource>
-                <con:resource name="Create vote with empty menu" path="" id="de6e6143-9a30-4a6d-845d-8067f18c2996">
-                    <con:settings/>
-                    <con:parameters/>
-                    <con:method name="Method 1" id="c9e19a97-cff6-4879-a842-95536f60e0f2" method="POST">
-                        <con:settings/>
-                        <con:parameters/>
-                        <con:representation type="REQUEST">
-                            <con:mediaType>application/json</con:mediaType>
-                            <con:params/>
-                        </con:representation>
-                        <con:representation type="FAULT">
-                            <con:mediaType>text/html;charset=utf-8</con:mediaType>
-                            <con:status>405</con:status>
-                            <con:params/>
-                            <con:element>html</con:element>
-                        </con:representation>
-                        <con:request name="Request 1" id="86d65b12-5c4e-4eea-bb8f-c3337a22bf53"
-                                     mediaType="application/json" postQueryString="false">
-                            <con:settings>
-                                <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
-                            </con:settings>
-                            <con:endpoint>http://localhost:8088/restaurant_voting_system</con:endpoint>
-                            <con:request/>
-                            <con:originalUri>http://localhost/restaurant_voting_system/rest/restaurants/100003
-                            </con:originalUri>
-                            <con:credentials>
-                                <con:username>user@yandex.ru</con:username>
-                                <con:password>password</con:password>
-                                <con:selectedAuthProfile>Basic</con:selectedAuthProfile>
-                                <con:addedBasicAuthenticationTypes>Basic</con:addedBasicAuthenticationTypes>
-                                <con:authType>Global HTTP Settings</con:authType>
-                            </con:credentials>
-                            <con:jmsConfig JMSDeliveryMode="PERSISTENT"/>
-                            <con:jmsPropertyConfig/>
-                            <con:parameters/>
-                        </con:request>
-                    </con:method>
-                </con:resource>
+
                 <con:method name="Get restaurant" id="707ad538-6dfd-4dff-9494-60ca6d03bbc1" method="GET">
                     <con:settings/>
                     <con:parameters/>
@@ -1999,7 +2058,7 @@
                     <con:parameters/>
                     <con:representation type="RESPONSE">
                         <con:mediaType>application/json</con:mediaType>
-                        <con:status>200</con:status>
+                        <con:status>200 201</con:status>
                         <con:params/>
                         <con:element xmlns:ns="http://localhost/restaurant_voting_system/rest/restaurants/100003">
                             ns:Response

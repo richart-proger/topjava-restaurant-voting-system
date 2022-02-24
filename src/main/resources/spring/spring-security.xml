@@ -14,15 +14,18 @@
         <http-basic/>
         <intercept-url pattern="/rest/admin/**" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/rest/votes/history/**" access="hasRole('ADMIN')"/>
-
         <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
 
-        <intercept-url pattern="/rest/restaurants" access="permitAll()"/>
+        <intercept-url pattern="/rest/restaurants" access="permitAll()" method="GET"/>
         <intercept-url pattern="/rest/restaurants/menus" access="permitAll()"/>
+        <intercept-url pattern="/rest/restaurants/**/menu/" access="isAuthenticated()" method="GET"/>
+        <intercept-url pattern="/rest/restaurants/{id}" access="isAuthenticated()" method="POST"/>
+        <intercept-url pattern="/rest/restaurants/**" access="isAuthenticated()" method="GET"/>
+        <intercept-url pattern="/rest/restaurants/**" access="hasRole('ADMIN')"/>
+        <intercept-url pattern="/rest/restaurants" access="hasRole('ADMIN')" method="POST"/>
 
         <intercept-url pattern="/rest/profile/**" access="isAuthenticated()"/>
         <intercept-url pattern="/rest/votes/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/rest/restaurants/**" access="isAuthenticated()"/>
 
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>

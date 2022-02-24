@@ -66,7 +66,7 @@ public class UserService implements UserDetailsService {
     public void update(UserTo userTo) {
         Assert.notNull(userTo, "User must be not null");
         User user = get(userTo.id());
-        prepareAndSave(ToUtil.updateFromTo(user, userTo));
+        prepareAndSave(ToUtil.updateUserFromTo(user, userTo));
     }
 
     @CacheEvict(value = "users", allEntries = true)
